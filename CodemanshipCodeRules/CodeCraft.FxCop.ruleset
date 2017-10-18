@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Copy of Codemanship Code Rules" Description="These rules apply to code created for Codemanship Code Craft Test" ToolsVersion="12.0">
+  <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
+    <Rule Id="TT1010" Action="Warning" />
+    <Rule Id="TT1011" Action="Warning" />
+    <Rule Id="TT1012" Action="Warning" />
+    <Rule Id="TT1013" Action="Warning" />
+    <Rule Id="TT1014" Action="Warning" />
+    <Rule Id="TT1015" Action="Warning" />
+    <Rule Id="TT1016" Action="Warning" />
+    <Rule Id="TT1017" Action="Warning" />
+    <Rule Id="TT1018" Action="Warning" />
+    <Rule Id="TT1019" Action="Warning" />
+    <Rule Id="TT1020" Action="Warning" />
+  </Rules>
+</RuleSet>
