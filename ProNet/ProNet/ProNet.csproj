@@ -40,8 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IProgrammerRepository.cs" />
     <Compile Include="IProNet.cs" />
+    <Compile Include="Programmer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RankCalculator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="requirements.txt" />
