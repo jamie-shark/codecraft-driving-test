@@ -4,7 +4,7 @@ namespace ProNet
 {
     public interface IPageRankable
     {
-        string Id { get; }
-        IEnumerable<string> Recommendations { get; }
+        IEnumerable<string> GetRecommendations();
+        IEnumerable<IPageRankable> GetRecommenders(IEnumerable<IPageRankable> pages);
     }
 }

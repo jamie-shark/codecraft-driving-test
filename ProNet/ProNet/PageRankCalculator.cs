@@ -31,14 +31,12 @@ namespace ProNet
 
         private IEnumerable<IPageRankable> OthersThatReference(IPageRankable page)
         {
-            return _pageRepository
-                .GetAll()
-                .Where(p => p.Recommendations.Contains(page.Id));
+            return page.GetOthersThatRecommend(_pageRepository.GetAll());
         }
 
         private static int ReferenceCount(IPageRankable page)
         {
-            return page.Recommendations.Count();
+            return page.GetRecommendations().Count();
         }
     }
 }
