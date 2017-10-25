@@ -307,3 +307,5 @@ OpenCover/
 # Vim swap files
 *.sw[o-z]
 
+# solution nuget packages
+tools/

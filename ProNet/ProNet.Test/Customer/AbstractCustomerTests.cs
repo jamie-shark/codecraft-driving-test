@@ -6,6 +6,7 @@ using NUnit.Framework;
 namespace ProNet.Test.Customer
 {
     [TestFixture]
+    [Category("Acceptance")]
     public abstract class AbstractCustomerTests
     {
         private readonly string _filename = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) +
