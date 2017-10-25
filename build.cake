@@ -10,6 +10,7 @@ var excludeAcceptanceTests = true;
 Task("Default")
     .IsDependentOn("Restore")
     .IsDependentOn("Build")
-    .IsDependentOn("Test");
+    .IsDependentOn("Run-Unit-Tests")
+    .IsDependentOn("Run-Acceptance-Tests");
 
 RunTarget(target);

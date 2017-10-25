@@ -11,7 +11,16 @@ Task("Build").Does(() => {
     });
 });
 
-Task("Test").Does(() => {
-    var exclude = excludeAcceptanceTests ? "/exclude:Acceptance" : "";
-    NUnit3(tests, new NUnit3Settings ());
+Task("Run-Unit-Tests").Does(() => {
+    RunTestsWhere("cat != Acceptance");
 });
+
+Task("Run-Acceptance-Tests").Does(() => {
+    RunTestsWhere("cat == Acceptance");
+});
+
+void RunTestsWhere(string where) {
+    NUnit3(tests, new NUnit3Settings {
+        Where = where
+    });
+}
