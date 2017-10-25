@@ -2,12 +2,12 @@
 
 namespace ProNet
 {
-    public class Programmer
+    public class Programmer : IPageRankable
     {
         public string Id { get; }
-        public List<string> Recommendations { get; }
+        public IEnumerable<string> Recommendations { get; }
 
-        public Programmer(string id, List<string> recommendations)
+        public Programmer(string id, IEnumerable<string> recommendations)
         {
             Id = id;
             Recommendations = recommendations;
