@@ -1,9 +1,14 @@
-﻿using System;
-
-namespace ProNet.Test.Customer
+﻿namespace ProNet.Test.Customer
 {
-    public class ProNetStub : IProNet
+    public class ProNet : IProNet
     {
+        private readonly IRankCalculator _rankCalculator;
+
+        public ProNet(IRankCalculator rankCalculator)
+        {
+            _rankCalculator = rankCalculator;
+        }
+
         public string[] Skills(string programmer)
         {
             return new string[]{};
@@ -16,7 +21,7 @@ namespace ProNet.Test.Customer
 
         public double Rank(string programmer)
         {
-            return 0.0;
+            return _rankCalculator.GetRank(programmer);
         }
 
         public int DegreesOfSeparation(string programmer1, string programmer2)

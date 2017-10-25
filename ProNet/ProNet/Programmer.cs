@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ProNet
 {
-    public class Programmer : IPageRankable
+    public class Programmer : IRankable
     {
         private readonly string _id;
         private readonly IEnumerable<string> _recommendations;
@@ -14,12 +14,17 @@ namespace ProNet
             _recommendations = recommendations;
         }
 
+        public string GetId()
+        {
+            return _id;
+        }
+
         public IEnumerable<string> GetRecommendations()
         {
             return _recommendations;
         }
 
-        public IEnumerable<IPageRankable> GetOthersThatRecommend(IEnumerable<IPageRankable> pages)
+        public IEnumerable<IRankable> GetRecommenders(IEnumerable<IRankable> pages)
         {
             return pages.Where(p => p.GetRecommendations().Contains(_id));
         }
