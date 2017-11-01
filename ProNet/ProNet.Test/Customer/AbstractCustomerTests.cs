@@ -9,8 +9,7 @@ namespace ProNet.Test.Customer
     [Category("Acceptance")]
     public abstract class AbstractCustomerTests
     {
-        private readonly string _filename = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) +
-                                            @"\ProNet.xml";
+        private readonly string _filename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ProNet.xml");
 
         private IProNet _proNet;
 

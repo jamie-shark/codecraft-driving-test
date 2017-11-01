@@ -45,8 +45,10 @@
     <Compile Include="IProgrammerRepository.cs" />
     <Compile Include="IProNet.cs" />
     <Compile Include="Programmer.cs" />
+    <Compile Include="XmlNetworkParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProgrammerRankCalculator.cs" />
+    <Compile Include="XmlProgrammerRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="requirements.txt" />
