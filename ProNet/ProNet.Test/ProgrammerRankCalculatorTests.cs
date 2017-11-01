@@ -35,17 +35,22 @@ namespace ProNet.Test
             const double expected = 1.0d;
             const double range = 0.01d;
 
-            var programmerA = new Programmer(idA, new List<string> { idB });
-            var programmerB = new Programmer(idB, new List<string> { idA });
+            var programmers = new List<Programmer>
+            {
+                new Programmer(idA, new List<string> { idB }),
+                new Programmer(idB, new List<string> { idA })
+            };
+
             var programmerRepository = Substitute.For<IProgrammerRepository>();
-            programmerRepository.GetById(idA).Returns(programmerA);
-            programmerRepository.GetById(idB).Returns(programmerB);
-            programmerRepository.GetAll().Returns(new List<Programmer> { programmerA, programmerB });
-            var rankCalculator = new ProgrammerRankCalculator(programmerRepository);
+            programmerRepository.GetAll().Returns(programmers);
+            programmers.ForEach(programmer => programmerRepository.GetById(programmer.GetId()).Returns(programmer));
 
-            var rank = rankCalculator.GetRank(idA, settleLimit);
-
-            Assert.That(rank, Is.EqualTo(expected).Within(range));
+            programmers.ForEach(programmer =>
+            {
+                var rankCalculator = new ProgrammerRankCalculator(programmerRepository);
+                var rank = rankCalculator.GetRank(programmer.GetId(), settleLimit);
+                Assert.That(rank, Is.EqualTo(expected).Within(range));
+            });
         }
     }
 }
