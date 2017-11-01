@@ -18,10 +18,10 @@ namespace ProNet
         {
             const double dampingFactor = 0.85d;
             var rank = 0d;
-            var page = _programmerRepository.GetById(programmerId);
+            var programmer = _programmerRepository.GetById(programmerId);
 
             while (++_iteration < settleLimit)
-                rank = (1 - dampingFactor) + dampingFactor * OthersThatReference(page)
+                rank = (1 - dampingFactor) + dampingFactor * OthersThatReference(programmer)
                             .Select(p => GetRank(p.GetId(), settleLimit) / ReferenceCount(p))
                             .Sum();
 

@@ -8,10 +8,10 @@ namespace ProNet.Test.Customer
         protected override IProNet LoadProNet(string filename)
         {
             // load your implementation here
-            var pageRepository = new XmlProgrammerRepository(filename);
-            var pageRankCalculator = new ProgrammerRankCalculator(pageRepository);
+            var programmerRepository = new XmlProgrammerRepository(filename);
+            var programmerRankCalculator = new ProgrammerRankCalculator(programmerRepository);
 
-            return new ProNet(pageRankCalculator);
+            return new ProNet(programmerRankCalculator);
         }
     }
 }

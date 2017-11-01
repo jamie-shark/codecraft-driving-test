@@ -24,9 +24,9 @@ namespace ProNet
             return _recommendations;
         }
 
-        public IEnumerable<IRankable> GetRecommenders(IEnumerable<IRankable> pages)
+        public IEnumerable<IRankable> GetRecommenders(IEnumerable<IRankable> programmers)
         {
-            return pages.Where(p => p.GetRecommendations().Contains(_id));
+            return programmers.Where(p => p.GetRecommendations().Contains(_id));
         }
     }
 }

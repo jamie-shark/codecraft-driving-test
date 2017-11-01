@@ -24,9 +24,9 @@ namespace ProNet
             return network.Programmer.Select(p => new Programmer(p.name, p.Recommendations));
         }
 
-        public IRankable GetById(string pageId)
+        public IRankable GetById(string id)
         {
-            return GetAll().First(r => r.GetId() == pageId);
+            return GetAll().First(r => r.GetId() == id);
         }
     }
 }

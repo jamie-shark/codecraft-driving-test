@@ -6,6 +6,6 @@ namespace ProNet
     {
         string GetId();
         IEnumerable<string> GetRecommendations();
-        IEnumerable<IRankable> GetRecommenders(IEnumerable<IRankable> pages);
+        IEnumerable<IRankable> GetRecommenders(IEnumerable<IRankable> programmers);
     }
 }

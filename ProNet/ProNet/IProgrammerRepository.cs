@@ -5,6 +5,6 @@ namespace ProNet
     public interface IProgrammerRepository
     {
         IEnumerable<IRankable> GetAll();
-        IRankable GetById(string pageId);
+        IRankable GetById(string id);
     }
 }
