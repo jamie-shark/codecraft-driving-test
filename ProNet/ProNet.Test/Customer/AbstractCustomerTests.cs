@@ -114,8 +114,8 @@ namespace ProNet.Test.Customer
         [Test]
         public void AttemptToLoadInvalidDataThrowsException()
         {
-            string invalidFile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) +
-                                            @"\InvalidData.xml";
+            string invalidFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "InvalidData.xml");
+
             CheckException(() => LoadProNet(invalidFile), "File " + invalidFile + " is not a valid ProNet data file");
         }
 
