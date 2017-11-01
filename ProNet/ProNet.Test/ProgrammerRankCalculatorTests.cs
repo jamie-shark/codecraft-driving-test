@@ -26,7 +26,7 @@ namespace ProNet.Test
         }
 
         [Test]
-        public void Two_programmers_recommending_each_other()
+        public void First_worked_example()
         {
             const string idA = "a";
             const string idB = "b";
@@ -52,7 +52,7 @@ namespace ProNet.Test
         }
 
         [Test]
-        public void Four_programmers_network()
+        public void Second_worked_example()
         {
 
             const string idA = "a";
