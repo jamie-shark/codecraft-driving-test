@@ -23,11 +23,16 @@ namespace ProNet
             var programmer = _programmerRepository.GetById(programmerId);
 
             while (++_iteration < settleLimit)
-                rank = (1 - dampingFactor) + dampingFactor * OthersThatRecommend(programmer)
-                            .Select(p => GetRank(p.GetId()) / RecommendationCount(p))
-                            .Sum();
+                rank = (1 - dampingFactor) + dampingFactor * SumOfOthers(programmer);
 
             return rank;
+        }
+
+        private double SumOfOthers(IRankable programmer)
+        {
+            return OthersThatRecommend(programmer)
+                .Select(p => GetRank(p.GetId()) / RecommendationCount(p))
+                .Sum();
         }
 
         private IEnumerable<IRankable> OthersThatRecommend(IRankable programmer)
