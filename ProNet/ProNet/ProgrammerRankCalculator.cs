@@ -8,10 +8,12 @@ namespace ProNet
         private readonly IProgrammerRepository _programmerRepository;
 
         private int _iteration;
+        private readonly double[] _ranks;
 
         public ProgrammerRankCalculator(IProgrammerRepository programmerRepository)
         {
             _programmerRepository = programmerRepository;
+            _ranks = new double[_programmerRepository.GetAll().Count()];
         }
 
         public double GetRank(string programmerId)
@@ -19,25 +21,16 @@ namespace ProNet
             const int settleLimit = 40;
             const double dampingFactor = 0.85d;
 
-            var rank = 0d;
-            var programmer = _programmerRepository.GetById(programmerId);
+            var programmers = _programmerRepository.GetAll().ToArray();
+            var indeces = new Dictionary<string, int>();
+            for (var i = 0; i < programmers.Length; i++)
+                indeces.Add(programmers[i].GetId(), i);
 
             while (++_iteration < settleLimit)
-                rank = (1 - dampingFactor) + dampingFactor * SumOfOthers(programmer);
+                for (var i = 0; i < programmers.Length; i++)
+                    _ranks[i] = 1 - dampingFactor + dampingFactor * programmers[i].GetRecommenders(_programmerRepository.GetAll()).Select(p => GetRank(p.GetId()) / RecommendationCount(p)).Sum();
 
-            return rank;
-        }
-
-        private double SumOfOthers(IRankable programmer)
-        {
-            return OthersThatRecommend(programmer)
-                .Select(p => GetRank(p.GetId()) / RecommendationCount(p))
-                .Sum();
-        }
-
-        private IEnumerable<IRankable> OthersThatRecommend(IRankable programmer)
-        {
-            return programmer.GetRecommenders(_programmerRepository.GetAll());
+            return _ranks[indeces[programmerId]];
         }
 
         private static int RecommendationCount(IRankable programmer)
