@@ -21,19 +21,19 @@ namespace ProNet
             var programmer = _programmerRepository.GetById(programmerId);
 
             while (++_iteration < settleLimit)
-                rank = (1 - dampingFactor) + dampingFactor * OthersThatReference(programmer)
-                            .Select(p => GetRank(p.GetId(), settleLimit) / ReferenceCount(p))
+                rank = (1 - dampingFactor) + dampingFactor * OthersThatRecommend(programmer)
+                            .Select(p => GetRank(p.GetId(), settleLimit) / RecommendationCount(p))
                             .Sum();
 
             return rank;
         }
 
-        private IEnumerable<IRankable> OthersThatReference(IRankable programmer)
+        private IEnumerable<IRankable> OthersThatRecommend(IRankable programmer)
         {
             return programmer.GetRecommenders(_programmerRepository.GetAll());
         }
 
-        private static int ReferenceCount(IRankable programmer)
+        private static int RecommendationCount(IRankable programmer)
         {
             return programmer.GetRecommendations().Count();
         }
