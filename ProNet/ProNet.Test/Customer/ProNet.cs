@@ -21,7 +21,7 @@
 
         public double Rank(string programmer)
         {
-            return _rankCalculator.GetRank(programmer);
+            return _rankCalculator.GetRank(programmer, 40);
         }
 
         public int DegreesOfSeparation(string programmer1, string programmer2)

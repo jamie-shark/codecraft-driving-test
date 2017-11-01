@@ -14,9 +14,9 @@ namespace ProNet.Test
             var programmerRepository = Substitute.For<IProgrammerRepository>();
             programmerRepository.GetById("a").Returns(programmer);
             programmerRepository.GetAll().Returns(new List<Programmer> {programmer});
-            var rankCalculator = new ProgrammerRankCalculator(programmerRepository, 40);
+            var rankCalculator = new ProgrammerRankCalculator(programmerRepository);
 
-            var rank = rankCalculator.GetRank("a");
+            var rank = rankCalculator.GetRank("a", 40);
 
             Assert.That(rank, Is.EqualTo(0.15d).Within(0.01d));
         }
@@ -30,9 +30,9 @@ namespace ProNet.Test
             programmerRepository.GetById("a").Returns(programmerA);
             programmerRepository.GetById("b").Returns(programmerB);
             programmerRepository.GetAll().Returns(new List<Programmer> { programmerA, programmerB });
-            var rankCalculator = new ProgrammerRankCalculator(programmerRepository, 40);
+            var rankCalculator = new ProgrammerRankCalculator(programmerRepository);
 
-            var rank = rankCalculator.GetRank("a");
+            var rank = rankCalculator.GetRank("a", 40);
 
             Assert.That(rank, Is.EqualTo(1.0d).Within(0.01d));
         }

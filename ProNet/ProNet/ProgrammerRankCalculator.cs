@@ -6,25 +6,23 @@ namespace ProNet
     public class ProgrammerRankCalculator : IRankCalculator
     {
         private readonly IProgrammerRepository _programmerRepository;
-        private readonly int _settleLimit;
 
         private int _iteration;
 
-        public ProgrammerRankCalculator(IProgrammerRepository programmerRepository, int settleLimit)
+        public ProgrammerRankCalculator(IProgrammerRepository programmerRepository)
         {
             _programmerRepository = programmerRepository;
-            _settleLimit = settleLimit;
         }
 
-        public double GetRank(string programmerId)
+        public double GetRank(string programmerId, int settleLimit)
         {
             const double dampingFactor = 0.85d;
             var rank = 0d;
             var page = _programmerRepository.GetById(programmerId);
 
-            while (++_iteration < _settleLimit)
+            while (++_iteration < settleLimit)
                 rank = (1 - dampingFactor) + dampingFactor * OthersThatReference(page)
-                            .Select(p => GetRank(p.GetId()) / ReferenceCount(p))
+                            .Select(p => GetRank(p.GetId(), settleLimit) / ReferenceCount(p))
                             .Sum();
 
             return rank;
