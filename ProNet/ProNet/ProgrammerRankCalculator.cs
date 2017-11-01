@@ -18,7 +18,7 @@ namespace ProNet
 
         public double GetRank(string programmerId)
         {
-            const int settleLimit = 40;
+            const int settleLimit = 20;
             const double dampingFactor = 0.85d;
 
             var programmers = _programmerRepository.GetAll().ToArray();
