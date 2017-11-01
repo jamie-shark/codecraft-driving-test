@@ -10,11 +10,9 @@ namespace ProNet.Test
         [Test]
         public void Programmer_with_no_recommendations()
         {
-            const string idA = "a";
+            var programmers = new List<Programmer> { new Programmer("a", new List<string>()) };
 
-            var programmers = new List<Programmer> { new Programmer(idA, new List<string>()) };
-
-            var expectedResults = new Dictionary<string, double> { { idA, 0.15d } };
+            var expectedResults = new Dictionary<string, double> { { "a", 0.15d } };
 
             AssertProgrammerRanksAgainstExpectedResults(programmers, expectedResults);
         }
@@ -22,19 +20,16 @@ namespace ProNet.Test
         [Test]
         public void First_worked_example()
         {
-            const string idA = "a";
-            const string idB = "b";
-
             var programmers = new List<Programmer>
             {
-                new Programmer(idA, new List<string> { idB }),
-                new Programmer(idB, new List<string> { idA })
+                new Programmer("a", new List<string> { "b" }),
+                new Programmer("b", new List<string> { "a" })
             };
 
             var expectedResults = new Dictionary<string, double>
             {
-                { idA, 1d },
-                { idB, 1d }
+                { "a", 1d },
+                { "b", 1d }
             };
 
             AssertProgrammerRanksAgainstExpectedResults(programmers, expectedResults);
@@ -43,26 +38,20 @@ namespace ProNet.Test
         [Test]
         public void Second_worked_example()
         {
-
-            const string idA = "a";
-            const string idB = "b";
-            const string idC = "c";
-            const string idD = "d";
-
             var programmers = new List<Programmer>
             {
-                new Programmer(idA, new List<string> { idB, idC }),
-                new Programmer(idB, new List<string> { idC }),
-                new Programmer(idC, new List<string> { idA }),
-                new Programmer(idD, new List<string> { idC })
+                new Programmer("a", new List<string> { "b", "c" }),
+                new Programmer("b", new List<string> { "c" }),
+                new Programmer("c", new List<string> { "a" }),
+                new Programmer("d", new List<string> { "c" })
             };
 
             var expectedResults = new Dictionary<string, double>
             {
-                { idA, 1.49d },
-                { idB, 0.78d },
-                { idC, 1.57d },
-                { idD, 0.15d }
+                { "a", 1.49d },
+                { "b", 0.78d },
+                { "c", 1.57d },
+                { "d", 0.15d }
             };
 
             AssertProgrammerRanksAgainstExpectedResults(programmers, expectedResults);
