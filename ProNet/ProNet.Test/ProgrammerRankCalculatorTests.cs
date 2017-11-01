@@ -11,7 +11,6 @@ namespace ProNet.Test
         public void Programmer_with_no_recommendations()
         {
             const string programmerId = "a";
-            const int settleLimit = 40;
             const double expected = 0.15d;
             const double range = 0.01d;
 
@@ -21,7 +20,7 @@ namespace ProNet.Test
             programmerRepository.GetAll().Returns(new List<Programmer> {programmer});
             var rankCalculator = new ProgrammerRankCalculator(programmerRepository);
 
-            var rank = rankCalculator.GetRank(programmerId, settleLimit);
+            var rank = rankCalculator.GetRank(programmerId);
 
             Assert.That(rank, Is.EqualTo(expected).Within(range));
         }
@@ -31,7 +30,6 @@ namespace ProNet.Test
         {
             const string idA = "a";
             const string idB = "b";
-            const int settleLimit = 40;
             const double expected = 1.0d;
             const double range = 0.01d;
 
@@ -48,7 +46,7 @@ namespace ProNet.Test
             programmers.ForEach(programmer =>
             {
                 var rankCalculator = new ProgrammerRankCalculator(programmerRepository);
-                var rank = rankCalculator.GetRank(programmer.GetId(), settleLimit);
+                var rank = rankCalculator.GetRank(programmer.GetId());
                 Assert.That(rank, Is.EqualTo(expected).Within(range));
             });
         }

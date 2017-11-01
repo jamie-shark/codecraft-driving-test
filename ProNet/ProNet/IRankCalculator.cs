@@ -2,6 +2,6 @@
 {
     public interface IRankCalculator
     {
-        double GetRank(string programmerId, int settleLimit);
+        double GetRank(string programmerId);
     }
 }

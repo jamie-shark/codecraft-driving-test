@@ -14,15 +14,17 @@ namespace ProNet
             _programmerRepository = programmerRepository;
         }
 
-        public double GetRank(string programmerId, int settleLimit)
+        public double GetRank(string programmerId)
         {
+            const int settleLimit = 40;
             const double dampingFactor = 0.85d;
+
             var rank = 0d;
             var programmer = _programmerRepository.GetById(programmerId);
 
             while (++_iteration < settleLimit)
                 rank = (1 - dampingFactor) + dampingFactor * OthersThatRecommend(programmer)
-                            .Select(p => GetRank(p.GetId(), settleLimit) / RecommendationCount(p))
+                            .Select(p => GetRank(p.GetId()) / RecommendationCount(p))
                             .Sum();
 
             return rank;
