@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ProNet
@@ -30,7 +31,14 @@ namespace ProNet
                 for (var i = 0; i < programmers.Length; i++)
                     _ranks[i] = 1 - dampingFactor + dampingFactor * programmers[i].GetRecommenders(_programmerRepository.GetAll()).Select(p => GetRank(p.GetId()) / RecommendationCount(p)).Sum();
 
-            return _ranks[indeces[programmerId]];
+            try
+            {
+                return _ranks[indeces[programmerId]];
+            }
+            catch (KeyNotFoundException e)
+            {
+                throw new ArgumentException($"Programmer {programmerId} was not found");
+            }
         }
 
         private static int RecommendationCount(IRankable programmer)
