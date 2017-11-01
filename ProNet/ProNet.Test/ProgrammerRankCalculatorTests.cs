@@ -12,9 +12,9 @@ namespace ProNet.Test
         {
             const string idA = "a";
 
-            var expectedResults = new Dictionary<string, double> { { idA, 0.15d } };
-
             var programmers = new List<Programmer> { new Programmer(idA, new List<string>()) };
+
+            var expectedResults = new Dictionary<string, double> { { idA, 0.15d } };
 
             AssertProgrammerRanksAgainstExpectedResults(programmers, expectedResults);
         }
@@ -25,16 +25,16 @@ namespace ProNet.Test
             const string idA = "a";
             const string idB = "b";
 
-            var expectedResults = new Dictionary<string, double>
-            {
-                { idA, 1d },
-                { idB, 1d }
-            };
-
             var programmers = new List<Programmer>
             {
                 new Programmer(idA, new List<string> { idB }),
                 new Programmer(idB, new List<string> { idA })
+            };
+
+            var expectedResults = new Dictionary<string, double>
+            {
+                { idA, 1d },
+                { idB, 1d }
             };
 
             AssertProgrammerRanksAgainstExpectedResults(programmers, expectedResults);
@@ -49,20 +49,20 @@ namespace ProNet.Test
             const string idC = "c";
             const string idD = "d";
 
-            var expectedResults = new Dictionary<string, double>
-            {
-                { idA, 1.49d },
-                { idB, 0.78d },
-                { idC, 1.57d },
-                { idD, 0.15d }
-            };
-
             var programmers = new List<Programmer>
             {
                 new Programmer(idA, new List<string> { idB, idC }),
                 new Programmer(idB, new List<string> { idC }),
                 new Programmer(idC, new List<string> { idA }),
                 new Programmer(idD, new List<string> { idC })
+            };
+
+            var expectedResults = new Dictionary<string, double>
+            {
+                { idA, 1.49d },
+                { idB, 0.78d },
+                { idC, 1.57d },
+                { idD, 0.15d }
             };
 
             AssertProgrammerRanksAgainstExpectedResults(programmers, expectedResults);
