@@ -7,6 +7,8 @@ namespace ProNet.Test
     [TestFixture]
     public class ProgrammerRankCalculatorTests
     {
+        private IProgrammerRepository _programmerRepository;
+
         [Test]
         public void Programmer_with_no_recommendations()
         {
@@ -66,7 +68,6 @@ namespace ProNet.Test
                 { idC, 1.57d },
                 { idD, 0.15d }
             };
-            const double range = 0.01d;
 
             var programmers = new List<Programmer>
             {
@@ -76,16 +77,22 @@ namespace ProNet.Test
                 new Programmer(idD, new List<string> { idC })
             };
 
-            var programmerRepository = Substitute.For<IProgrammerRepository>();
-            programmerRepository.GetAll().Returns(programmers);
-            programmers.ForEach(programmer => programmerRepository.GetById(programmer.GetId()).Returns(programmer));
+            _programmerRepository = Substitute.For<IProgrammerRepository>();
+            _programmerRepository.GetAll().Returns(programmers);
+            programmers.ForEach(programmer => _programmerRepository.GetById(programmer.GetId()).Returns(programmer));
 
             programmers.ForEach(programmer =>
             {
-                var rankCalculator = new ProgrammerRankCalculator(programmerRepository);
-                var rank = rankCalculator.GetRank(programmer.GetId());
-                Assert.That(rank, Is.EqualTo(expectedResults[programmer.GetId()]).Within(range));
+                var programmerId = programmer.GetId();
+                AssertRankForProgrammerIsExpected(programmerId, expectedResults[programmerId]);
             });
+        }
+
+        private void AssertRankForProgrammerIsExpected(string programmerId, double expected)
+        {
+            var rankCalculator = new ProgrammerRankCalculator(_programmerRepository);
+            var rank = rankCalculator.GetRank(programmerId);
+            Assert.That(rank, Is.EqualTo(expected).Within(0.01d));
         }
     }
 }
