@@ -22,6 +22,9 @@ namespace ProNet
             if (programmerA.GetRecommendations().Contains(programmerBId) || programmerB.GetRecommendations().Contains(programmerAId))
                 return 1;
 
+            if (programmerA.GetRecommendations().Intersect(programmerB.GetRecommendations()).Any())
+                return 2;
+
             return -1;
         }
     }

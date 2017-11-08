@@ -31,11 +31,27 @@ namespace ProNet.Test
             AssertDegreesOfSeparation(programmerRepository, programmerAId, programmerBId, expected);
         }
 
-        private static IProgrammerRepository StubProgrammerRepository(IProgrammer programmerA, IProgrammer programmerB)
+        [Test]
+        public void Programmers_with_a_shared_recommendation_but_no_direct_relation_are_2_degrees_apart()
+        {
+            const int expected = 2;
+            const string programmerAId = "a";
+            const string programmerBId = "b";
+            const string programmerCId = "c";
+
+            var programmerRepository = StubProgrammerRepository(
+                new Programmer(programmerAId, new[] { programmerCId }, null),
+                new Programmer(programmerBId, new[] { programmerCId }, null),
+                new Programmer(programmerCId, new string[] { }, null));
+
+            AssertDegreesOfSeparation(programmerRepository, programmerAId, programmerBId, expected);
+        }
+
+        private static IProgrammerRepository StubProgrammerRepository(params IProgrammer[] programmers)
         {
             var programmerRepository = Substitute.For<IProgrammerRepository>();
-            programmerRepository.GetById(programmerA.GetId()).Returns(programmerA);
-            programmerRepository.GetById(programmerB.GetId()).Returns(programmerB);
+            foreach (var programmer in programmers)
+                programmerRepository.GetById(programmer.GetId()).Returns(programmer);
             return programmerRepository;
         }
 
