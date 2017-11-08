@@ -31,22 +31,6 @@ namespace ProNet.Test
             AssertDegreesOfSeparation(programmerRepository, programmerAId, programmerBId, expected);
         }
 
-        [Test]
-        public void Order_of_parameters_does_not_change_outcome()
-        {
-            const string programmerAId = "a";
-            const string programmerBId = "b";
-
-            var programmerRepository = StubProgrammerRepository(
-                new Programmer(programmerAId, new[] { programmerBId }, null),
-                new Programmer(programmerBId, new string[] { }, null));
-
-            var firstDegrees = new SeparationService(programmerRepository).GetDegreesOfSeparation(programmerAId, programmerBId);
-            var secondDegrees = new SeparationService(programmerRepository).GetDegreesOfSeparation(programmerBId, programmerAId);
-
-            Assert.That(firstDegrees, Is.EqualTo(secondDegrees));
-        }
-
         private static IProgrammerRepository StubProgrammerRepository(IProgrammer programmerA, IProgrammer programmerB)
         {
             var programmerRepository = Substitute.For<IProgrammerRepository>();
@@ -58,7 +42,10 @@ namespace ProNet.Test
         private static void AssertDegreesOfSeparation(IProgrammerRepository programmerRepository, string programmerAId, string programmerBId, int expected)
         {
             var degrees = new SeparationService(programmerRepository).GetDegreesOfSeparation(programmerAId, programmerBId);
+            var degreesWithParametersSwapped = new SeparationService(programmerRepository).GetDegreesOfSeparation(programmerBId, programmerAId);
+
             Assert.That(degrees, Is.EqualTo(expected));
+            Assert.That(degrees, Is.EqualTo(degreesWithParametersSwapped));
         }
     }
 }
