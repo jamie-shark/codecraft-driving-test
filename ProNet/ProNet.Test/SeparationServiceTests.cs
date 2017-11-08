@@ -6,61 +6,61 @@ namespace ProNet.Test
     [TestFixture]
     public class SeparationServiceTests
     {
-        [TestCase("a", "b", -1)]
-        [TestCase("a", "a", 0)]
-        public void Programmers_with_no_connection(string programmerAId, string programmerBId, int expected)
-        {
-            var programmerRepository = StubProgrammerRepository(
-                new Programmer(programmerAId, new string[] { }, null),
-                new Programmer(programmerBId, new string[] { }, null));
+        private const string ProgrammerAId = "a";
+        private const string ProgrammerBId = "b";
+        private const string ProgrammerCId = "c";
 
-            AssertDegreesOfSeparation(programmerRepository, programmerAId, programmerBId, expected);
+        [Test]
+        public void Programmers_with_self()
+        {
+            var expected = 0;
+            var programmerRepository = StubProgrammerRepository(new Programmer(ProgrammerAId, new string[] { }, null));
+
+            var degrees = new SeparationService(programmerRepository).GetDegreesOfSeparation(ProgrammerAId, ProgrammerAId);
+
+            Assert.That(degrees, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void Programmers_with_no_connection()
+        {
+            var expected = -1;
+            var programmerRepository = StubProgrammerRepository(
+                new Programmer(ProgrammerAId, new string[] { }, null),
+                new Programmer(ProgrammerBId, new string[] { }, null));
+            AssertDegreesOfSeparationBetweenAAndB(programmerRepository, expected);
         }
 
         [Test]
         public void Programmers_with_recommendations_are_1_degree_apart()
         {
-            const int expected = 1;
-            const string programmerAId = "a";
-            const string programmerBId = "b";
-
+            var expected = 1;
             var programmerRepository = StubProgrammerRepository(
-                new Programmer(programmerAId, new[] {programmerBId}, null),
-                new Programmer(programmerBId, new string[] { }, null));
-
-            AssertDegreesOfSeparation(programmerRepository, programmerAId, programmerBId, expected);
+                new Programmer(ProgrammerAId, new[] {ProgrammerBId}, null),
+                new Programmer(ProgrammerBId, new string[] { }, null));
+            AssertDegreesOfSeparationBetweenAAndB(programmerRepository, expected);
         }
 
         [Test]
         public void Programmers_with_a_shared_recommendation_but_no_direct_relation_are_2_degrees_apart()
         {
-            const int expected = 2;
-            const string programmerAId = "a";
-            const string programmerBId = "b";
-            const string programmerCId = "c";
-
+            var expected = 2;
             var programmerRepository = StubProgrammerRepository(
-                new Programmer(programmerAId, new[] { programmerCId }, null),
-                new Programmer(programmerBId, new[] { programmerCId }, null),
-                new Programmer(programmerCId, new string[] { }, null));
-
-            AssertDegreesOfSeparation(programmerRepository, programmerAId, programmerBId, expected);
+                new Programmer(ProgrammerAId, new[] { ProgrammerCId }, null),
+                new Programmer(ProgrammerBId, new[] { ProgrammerCId }, null),
+                new Programmer(ProgrammerCId, new string[] { }, null));
+            AssertDegreesOfSeparationBetweenAAndB(programmerRepository, expected);
         }
 
         [Test]
         public void Programmers_with_a_shared_recommender_but_no_direct_relation_are_2_degrees_apart()
         {
-            const int expected = 2;
-            const string programmerAId = "a";
-            const string programmerBId = "b";
-            const string programmerCId = "c";
-
+            var expected = 2;
             var programmerRepository = StubProgrammerRepository(
-                new Programmer(programmerAId, new string[] { }, null),
-                new Programmer(programmerBId, new string[] { }, null),
-                new Programmer(programmerCId, new [] { programmerAId, programmerBId }, null));
-
-            AssertDegreesOfSeparation(programmerRepository, programmerAId, programmerBId, expected);
+                new Programmer(ProgrammerAId, new string[] { }, null),
+                new Programmer(ProgrammerBId, new string[] { }, null),
+                new Programmer(ProgrammerCId, new [] { ProgrammerAId, ProgrammerBId }, null));
+            AssertDegreesOfSeparationBetweenAAndB(programmerRepository, expected);
         }
 
         private static IProgrammerRepository StubProgrammerRepository(params IProgrammer[] programmers)
@@ -72,10 +72,10 @@ namespace ProNet.Test
             return programmerRepository;
         }
 
-        private static void AssertDegreesOfSeparation(IProgrammerRepository programmerRepository, string programmerAId, string programmerBId, int expected)
+        private void AssertDegreesOfSeparationBetweenAAndB(IProgrammerRepository programmerRepository, int expected)
         {
-            var degrees = new SeparationService(programmerRepository).GetDegreesOfSeparation(programmerAId, programmerBId);
-            var degreesWithParametersSwapped = new SeparationService(programmerRepository).GetDegreesOfSeparation(programmerBId, programmerAId);
+            var degrees = new SeparationService(programmerRepository).GetDegreesOfSeparation(ProgrammerAId, ProgrammerBId);
+            var degreesWithParametersSwapped = new SeparationService(programmerRepository).GetDegreesOfSeparation(ProgrammerBId, ProgrammerAId);
 
             Assert.That(degrees, Is.EqualTo(expected));
             Assert.That(degrees, Is.EqualTo(degreesWithParametersSwapped));
