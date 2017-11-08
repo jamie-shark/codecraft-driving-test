@@ -17,8 +17,9 @@ namespace ProNet
                 return 0;
 
             var programmerA = _programmerRepository.GetById(programmerAId);
+            var programmerB = _programmerRepository.GetById(programmerBId);
 
-            if (programmerA.GetRecommendations().Contains(programmerBId))
+            if (programmerA.GetRecommendations().Contains(programmerBId) || programmerB.GetRecommendations().Contains(programmerAId))
                 return 1;
 
             return -1;
