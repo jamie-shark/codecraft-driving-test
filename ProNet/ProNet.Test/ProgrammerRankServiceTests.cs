@@ -10,7 +10,7 @@ namespace ProNet.Test
         [Test]
         public void Programmer_with_no_recommendations()
         {
-            var programmers = new List<Programmer> { new Programmer("a", new List<string>()) };
+            var programmers = new List<Programmer> { new Programmer("a", new List<string>(), null) };
 
             var expectedResults = new Dictionary<string, double> { { "a", 0.15d } };
 
@@ -22,8 +22,8 @@ namespace ProNet.Test
         {
             var programmers = new List<Programmer>
             {
-                new Programmer("a", new List<string> { "b" }),
-                new Programmer("b", new List<string> { "a" })
+                new Programmer("a", new List<string> { "b" }, null),
+                new Programmer("b", new List<string> { "a" }, null)
             };
 
             var expectedResults = new Dictionary<string, double>
@@ -40,10 +40,10 @@ namespace ProNet.Test
         {
             var programmers = new List<Programmer>
             {
-                new Programmer("a", new List<string> { "b", "c" }),
-                new Programmer("b", new List<string> { "c" }),
-                new Programmer("c", new List<string> { "a" }),
-                new Programmer("d", new List<string> { "c" })
+                new Programmer("a", new List<string> { "b", "c" }, null),
+                new Programmer("b", new List<string> { "c" }, null),
+                new Programmer("c", new List<string> { "a" }, null),
+                new Programmer("d", new List<string> { "c" }, null)
             };
 
             var expectedResults = new Dictionary<string, double>

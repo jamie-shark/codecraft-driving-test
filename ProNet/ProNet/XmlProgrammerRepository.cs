@@ -22,7 +22,7 @@ namespace ProNet
 
             if (network == null) throw new FileLoadException($"{_filename} could not be parsed as a Network");
 
-            return network.Programmer.Select(p => new Programmer(p.name, p.Recommendations));
+            return network.Programmer.Select(p => new Programmer(p.name, p.Recommendations, p.Skills));
         }
 
         public IRankable GetById(string id)

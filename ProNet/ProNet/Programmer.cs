@@ -8,7 +8,7 @@ namespace ProNet
         private readonly string _id;
         private readonly IEnumerable<string> _recommendations;
 
-        public Programmer(string id, IEnumerable<string> recommendations)
+        public Programmer(string id, IEnumerable<string> recommendations, string[] strings)
         {
             _id = id;
             _recommendations = recommendations;
