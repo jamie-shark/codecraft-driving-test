@@ -25,6 +25,9 @@ namespace ProNet
             if (programmerA.GetRecommendations().Intersect(programmerB.GetRecommendations()).Any())
                 return 2;
 
+            if (programmerA.GetRecommenders(_programmerRepository.GetAll()).Intersect(programmerB.GetRecommenders(_programmerRepository.GetAll())).Any())
+                return 2;
+
             return -1;
         }
     }
