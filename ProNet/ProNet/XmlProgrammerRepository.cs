@@ -27,7 +27,7 @@ namespace ProNet
 
         public IProgrammer GetById(string id)
         {
-            return GetAll().First(r => r.GetId() == id);
+            return GetAll().FirstOrDefault(r => r.GetId() == id);
         }
     }
 }
