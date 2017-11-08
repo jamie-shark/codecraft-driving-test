@@ -6,15 +6,16 @@ namespace ProNet.Test
     [TestFixture]
     public class SkillsServiceTests
     {
-        [Test]
-        public void GetSkills_calls_ProgrammerRepository_with_given_id()
+        [TestCase("a")]
+        [TestCase("b")]
+        public void GetSkills_calls_ProgrammerRepository_with_given_id(string expectedSkills)
         {
-            var programmerId = "programmer";
+            var id = "programmer id";
             var programmerRepository = Substitute.For<IProgrammerRepository>();
-            programmerRepository.GetById(programmerId).Returns(new Programmer(programmerId, null, new[] {"a"}));
+            programmerRepository.GetById(id).Returns(new Programmer(id, null, new[] {expectedSkills}));
             var skillsService = new SkillsService(programmerRepository);
-            var skills = skillsService.GetSkills(programmerId);
-            Assert.That(skills, Is.EqualTo(new[] {"a"}));
+            var skills = skillsService.GetSkills(id);
+            Assert.That(skills, Is.EqualTo(new[] { expectedSkills }));
         }
     }
 }

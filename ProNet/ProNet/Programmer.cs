@@ -3,15 +3,22 @@ using System.Linq;
 
 namespace ProNet
 {
-    public class Programmer : IRankable
+
+    public interface IProgrammer : IRankable, ISkillable
+    {
+    }
+
+    public class Programmer : IProgrammer
     {
         private readonly string _id;
         private readonly IEnumerable<string> _recommendations;
+        private readonly string[] _skills;
 
-        public Programmer(string id, IEnumerable<string> recommendations, string[] strings)
+        public Programmer(string id, IEnumerable<string> recommendations, string[] skills)
         {
             _id = id;
             _recommendations = recommendations;
+            _skills = skills;
         }
 
         public string GetId()
@@ -27,6 +34,11 @@ namespace ProNet
         public IEnumerable<IRankable> GetRecommenders(IEnumerable<IRankable> programmers)
         {
             return programmers.Where(p => p.GetRecommendations().Contains(_id));
+        }
+
+        public IEnumerable<string> GetSkills()
+        {
+            return _skills;
         }
     }
 }

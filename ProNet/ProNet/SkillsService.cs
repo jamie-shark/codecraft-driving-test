@@ -1,4 +1,6 @@
-﻿namespace ProNet
+﻿using System.Collections.Generic;
+
+namespace ProNet
 {
     public class SkillsService
     {
@@ -9,9 +11,9 @@
             _programmerRepository = programmerRepository;
         }
 
-        public string[] GetSkills(string programmerId)
+        public IEnumerable<string> GetSkills(string programmerId)
         {
-            return new[] {"a"};
+            return _programmerRepository.GetById(programmerId).GetSkills();
         }
     }
 }

@@ -4,7 +4,7 @@ namespace ProNet
 {
     public interface IProgrammerRepository
     {
-        IEnumerable<IRankable> GetAll();
-        IRankable GetById(string id);
+        IEnumerable<IProgrammer> GetAll();
+        IProgrammer GetById(string id);
     }
 }

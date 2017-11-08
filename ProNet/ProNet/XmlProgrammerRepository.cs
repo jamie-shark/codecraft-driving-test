@@ -15,7 +15,7 @@ namespace ProNet
             _filename = filename;
         }
 
-        public IEnumerable<IRankable> GetAll()
+        public IEnumerable<IProgrammer> GetAll()
         {
             var serilaizer = new XmlSerializer(typeof(Network));
             var network = serilaizer.Deserialize(new FileStream(_filename, FileMode.Open, FileAccess.Read)) as Network;
@@ -25,7 +25,7 @@ namespace ProNet
             return network.Programmer.Select(p => new Programmer(p.name, p.Recommendations, p.Skills));
         }
 
-        public IRankable GetById(string id)
+        public IProgrammer GetById(string id)
         {
             return GetAll().First(r => r.GetId() == id);
         }
