@@ -11,7 +11,7 @@ namespace ProNet.Test
         private const string ProgrammerCId = "c";
 
         [Test]
-        public void Programmers_with_self()
+        public void Separation_with_self()
         {
             var expected = 0;
             var programmerRepository = StubProgrammerRepository(new Programmer(ProgrammerAId, new string[] { }, null));
@@ -22,7 +22,7 @@ namespace ProNet.Test
         }
 
         [Test]
-        public void Programmers_with_no_connection()
+        public void Separation_with_no_connection()
         {
             var expected = -1;
             var programmerRepository = StubProgrammerRepository(
@@ -32,7 +32,7 @@ namespace ProNet.Test
         }
 
         [Test]
-        public void Programmers_with_recommendations_are_1_degree_apart()
+        public void Separation_with_neighbour()
         {
             var expected = 1;
             var programmerRepository = StubProgrammerRepository(
@@ -42,7 +42,7 @@ namespace ProNet.Test
         }
 
         [Test]
-        public void Programmers_with_a_shared_recommendation_but_no_direct_relation_are_2_degrees_apart()
+        public void Separation_with_a_shared_recommendation()
         {
             var expected = 2;
             var programmerRepository = StubProgrammerRepository(
@@ -53,7 +53,7 @@ namespace ProNet.Test
         }
 
         [Test]
-        public void Programmers_with_a_shared_recommender_but_no_direct_relation_are_2_degrees_apart()
+        public void Separation_with_a_shared_recommender()
         {
             var expected = 2;
             var programmerRepository = StubProgrammerRepository(
