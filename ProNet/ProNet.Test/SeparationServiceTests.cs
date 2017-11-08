@@ -19,5 +19,17 @@ namespace ProNet.Test
             var degrees = separationService.GetDegreesOfSeparation("a", "b");
             Assert.That(degrees, Is.EqualTo(expected));
         }
+
+        [Test]
+        public void Separation_with_self()
+        {
+            const int expected = 0;
+            var programmerRepository = Substitute.For<IProgrammerRepository>();
+            var programmer = new Programmer("a", null, null);
+            programmerRepository.GetById("a").Returns(programmer);
+            var separationService = new SeparationService(programmerRepository);
+            var degrees = separationService.GetDegreesOfSeparation("a", "a");
+            Assert.That(degrees, Is.EqualTo(expected));
+        }
     }
 }

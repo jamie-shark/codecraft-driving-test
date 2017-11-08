@@ -11,6 +11,8 @@
 
         public int GetDegreesOfSeparation(string programmerA, string programmerB)
         {
+            if (programmerA == programmerB)
+                return 0;
             return -1;
         }
     }
