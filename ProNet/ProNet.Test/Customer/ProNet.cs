@@ -2,11 +2,11 @@
 {
     public class ProNet : IProNet
     {
-        private readonly IRankCalculator _rankCalculator;
+        private readonly IRankService _rankService;
 
-        public ProNet(IRankCalculator rankCalculator)
+        public ProNet(IRankService rankService)
         {
-            _rankCalculator = rankCalculator;
+            _rankService = rankService;
         }
 
         public string[] Skills(string programmer)
@@ -21,7 +21,7 @@
 
         public double Rank(string programmer)
         {
-            return _rankCalculator.GetRank(programmer);
+            return _rankService.GetRank(programmer);
         }
 
         public int DegreesOfSeparation(string programmer1, string programmer2)

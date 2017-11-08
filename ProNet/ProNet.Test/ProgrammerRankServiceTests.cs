@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace ProNet.Test
 {
     [TestFixture]
-    public class ProgrammerRankCalculatorTests
+    public class ProgrammerRankServiceTests
     {
         [Test]
         public void Programmer_with_no_recommendations()
@@ -68,8 +68,8 @@ namespace ProNet.Test
                 var programmerId = programmer.GetId();
                 var expected = expectedResults[programmerId];
 
-                var rankCalculator = new ProgrammerRankCalculator(programmerRepository);
-                var rank = rankCalculator.GetRank(programmerId);
+                var rankService = new ProgrammerRankService(programmerRepository);
+                var rank = rankService.GetRank(programmerId);
                 Assert.That(rank, Is.EqualTo(expected).Within(0.01d));
             });
         }

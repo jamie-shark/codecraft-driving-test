@@ -51,7 +51,7 @@
     <Compile Include="Customer\AbstractCustomerTests.cs" />
     <Compile Include="Customer\ProNet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProgrammerRankCalculatorTests.cs" />
+    <Compile Include="ProgrammerRankServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProNet\ProNet.csproj">

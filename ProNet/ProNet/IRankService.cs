@@ -1,6 +1,6 @@
 ﻿namespace ProNet
 {
-    public interface IRankCalculator
+    public interface IRankService
     {
         double GetRank(string programmerId);
     }
