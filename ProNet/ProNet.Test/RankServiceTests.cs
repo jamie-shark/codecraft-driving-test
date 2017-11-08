@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace ProNet.Test
 {
     [TestFixture]
-    public class ProgrammerRankServiceTests
+    public class RankServiceTests
     {
         [Test]
         public void Programmer_with_no_recommendations()
@@ -14,7 +14,7 @@ namespace ProNet.Test
 
             var expectedResults = new Dictionary<string, double> { { "a", 0.15d } };
 
-            AssertProgrammerRanksAgainstExpectedResults(programmers, expectedResults);
+            AssertRanksAgainstExpectedResults(programmers, expectedResults);
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace ProNet.Test
                 { "b", 1d }
             };
 
-            AssertProgrammerRanksAgainstExpectedResults(programmers, expectedResults);
+            AssertRanksAgainstExpectedResults(programmers, expectedResults);
         }
 
         [Test]
@@ -54,10 +54,10 @@ namespace ProNet.Test
                 { "d", 0.15d }
             };
 
-            AssertProgrammerRanksAgainstExpectedResults(programmers, expectedResults);
+            AssertRanksAgainstExpectedResults(programmers, expectedResults);
         }
 
-        private static void AssertProgrammerRanksAgainstExpectedResults(List<Programmer> programmers, IReadOnlyDictionary<string, double> expectedResults)
+        private static void AssertRanksAgainstExpectedResults(List<Programmer> programmers, IReadOnlyDictionary<string, double> expectedResults)
         {
             var programmerRepository = Substitute.For<IProgrammerRepository>();
             programmerRepository.GetAll().Returns(programmers);
@@ -68,7 +68,7 @@ namespace ProNet.Test
                 var programmerId = programmer.GetId();
                 var expected = expectedResults[programmerId];
 
-                var rankService = new ProgrammerRankService(programmerRepository);
+                var rankService = new RankService(programmerRepository);
                 var rank = rankService.GetRank(programmerId);
                 Assert.That(rank, Is.EqualTo(expected).Within(0.01d));
             });

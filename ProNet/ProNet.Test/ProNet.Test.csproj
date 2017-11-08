@@ -51,7 +51,7 @@
     <Compile Include="Customer\AbstractCustomerTests.cs" />
     <Compile Include="Customer\ProNet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProgrammerRankServiceTests.cs" />
+    <Compile Include="RankServiceTests.cs" />
     <Compile Include="SkillsServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>

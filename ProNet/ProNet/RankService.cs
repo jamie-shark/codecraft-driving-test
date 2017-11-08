@@ -4,14 +4,14 @@ using System.Linq;
 
 namespace ProNet
 {
-    public class ProgrammerRankService : IRankService
+    public class RankService : IRankService
     {
         private readonly IProgrammerRepository _programmerRepository;
 
         private int _iteration;
         private readonly double[] _ranks;
 
-        public ProgrammerRankService(IProgrammerRepository programmerRepository)
+        public RankService(IProgrammerRepository programmerRepository)
         {
             _programmerRepository = programmerRepository;
             _ranks = new double[_programmerRepository.GetAll().Count()];

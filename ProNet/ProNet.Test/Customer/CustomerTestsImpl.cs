@@ -9,10 +9,10 @@ namespace ProNet.Test.Customer
         {
             // load your implementation here
             var programmerRepository = new XmlProgrammerRepository(filename);
-            var programmerRankService = new ProgrammerRankService(programmerRepository);
+            var rankService = new RankService(programmerRepository);
             var skillsService = new SkillsService(programmerRepository);
 
-            return new ProNet(programmerRankService, skillsService);
+            return new ProNet(rankService, skillsService);
         }
     }
 }
