@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
@@ -27,7 +28,9 @@ namespace ProNet
 
         public IProgrammer GetById(string id)
         {
-            return GetAll().FirstOrDefault(r => r.GetId() == id);
+            var programmer = GetAll().FirstOrDefault(r => r.GetId() == id);
+            if (programmer == null) throw new ArgumentException($"Programmer {id} was not found");
+            return programmer;
         }
     }
 }

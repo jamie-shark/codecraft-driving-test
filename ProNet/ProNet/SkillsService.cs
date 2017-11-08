@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ProNet
 {
@@ -14,9 +13,7 @@ namespace ProNet
 
         public IEnumerable<string> GetSkills(string programmerId)
         {
-            var programmer = _programmerRepository.GetById(programmerId);
-            if (programmer == null) throw new ArgumentException($"Programmer {programmerId} was not found");
-            return programmer.GetSkills();
+            return _programmerRepository.GetById(programmerId).GetSkills();
         }
     }
 }
