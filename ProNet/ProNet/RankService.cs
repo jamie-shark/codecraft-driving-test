@@ -6,15 +6,14 @@ namespace ProNet
 {
     public class RankService : IRankService
     {
-        private readonly IProgrammerRepository _programmerRepository;
-
         private int _iteration;
+        private readonly IProgrammer[] _programmers;
         private readonly double[] _ranks;
 
         public RankService(IProgrammerRepository programmerRepository)
         {
-            _programmerRepository = programmerRepository;
-            _ranks = new double[_programmerRepository.GetAll().Count()];
+            _programmers = programmerRepository.GetAll().ToArray();
+            _ranks = new double[_programmers.Length];
         }
 
         public double GetRank(string programmerId)
@@ -22,14 +21,13 @@ namespace ProNet
             const int settleLimit = 20;
             const double dampingFactor = 0.85d;
 
-            var programmers = _programmerRepository.GetAll().ToArray();
             var indeces = new Dictionary<string, int>();
-            for (var i = 0; i < programmers.Length; i++)
-                indeces.Add(programmers[i].GetId(), i);
+            for (var i = 0; i < _programmers.Length; i++)
+                indeces.Add(_programmers[i].GetId(), i);
 
             while (++_iteration < settleLimit)
-                for (var i = 0; i < programmers.Length; i++)
-                    _ranks[i] = 1 - dampingFactor + dampingFactor * programmers[i].GetRecommenders(_programmerRepository.GetAll()).Select(p => GetRank(p.GetId()) / RecommendationCount(p)).Sum();
+                for (var i = 0; i < _programmers.Length; i++)
+                    _ranks[i] = 1 - dampingFactor + dampingFactor * _programmers[i].GetRecommenders(_programmers).Select(p => GetRank(p.GetId()) / RecommendationCount(p)).Sum();
 
             try
             {
