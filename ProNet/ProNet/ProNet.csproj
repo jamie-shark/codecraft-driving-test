@@ -47,6 +47,7 @@
     <Compile Include="ISkillable.cs" />
     <Compile Include="ISkillsService.cs" />
     <Compile Include="Programmer.cs" />
+    <Compile Include="SeparationService.cs" />
     <Compile Include="SkillsService.cs" />
     <Compile Include="XmlNetworkParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
