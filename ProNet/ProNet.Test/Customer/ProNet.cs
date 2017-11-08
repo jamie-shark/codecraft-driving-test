@@ -3,15 +3,17 @@
     public class ProNet : IProNet
     {
         private readonly IRankService _rankService;
+        private readonly ISkillsService _skillsService;
 
-        public ProNet(IRankService rankService)
+        public ProNet(IRankService rankService, ISkillsService skillsService)
         {
             _rankService = rankService;
+            _skillsService = skillsService;
         }
 
         public string[] Skills(string programmer)
         {
-            return new string[]{};
+            return (string[]) _skillsService.GetSkills(programmer);
         }
 
         public string[] Recommendations(string programmer)

@@ -45,6 +45,7 @@
     <Compile Include="IProgrammerRepository.cs" />
     <Compile Include="IProNet.cs" />
     <Compile Include="ISkillable.cs" />
+    <Compile Include="ISkillsService.cs" />
     <Compile Include="Programmer.cs" />
     <Compile Include="SkillsService.cs" />
     <Compile Include="XmlNetworkParser.cs" />

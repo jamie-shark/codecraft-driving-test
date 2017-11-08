@@ -2,7 +2,7 @@
 
 namespace ProNet
 {
-    public class SkillsService
+    public class SkillsService : ISkillsService
     {
         private readonly IProgrammerRepository _programmerRepository;
 
