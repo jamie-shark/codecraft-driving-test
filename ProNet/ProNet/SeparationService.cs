@@ -28,6 +28,24 @@ namespace ProNet
             if (programmerA.GetRecommenders(_programmerRepository.GetAll()).Intersect(programmerB.GetRecommenders(_programmerRepository.GetAll())).Any())
                 return 2;
 
+            //TODO: This should be done by recursively calling this method for the second degree relations
+            var programmerASecondDegreeRelations =
+                programmerA
+                    .GetRecommendations()
+                    .Select(id => _programmerRepository.GetById(id))
+                    .SelectMany(recommendation => recommendation.GetRecommendations())
+                    .Distinct();
+
+            var programmerBSecondDegreeRelations =
+                programmerB
+                    .GetRecommendations()
+                    .Select(id => _programmerRepository.GetById(id))
+                    .SelectMany(recommendation => recommendation.GetRecommendations())
+                    .Distinct();
+
+            if (programmerASecondDegreeRelations.Contains(programmerBId) || programmerBSecondDegreeRelations.Contains(programmerAId))
+                return 2;
+
             return -1;
         }
     }

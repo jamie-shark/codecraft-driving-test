@@ -63,6 +63,17 @@ namespace ProNet.Test
             AssertDegreesOfSeparationBetweenAAndB(programmerRepository, expected);
         }
 
+        [Test]
+        public void Separation_with_a_one_way_second_degree_connection()
+        {
+            var expected = 2;
+            var programmerRepository = StubProgrammerRepository(
+                new Programmer(ProgrammerAId, new[] { ProgrammerCId }, null),
+                new Programmer(ProgrammerBId, new string[] { }, null),
+                new Programmer(ProgrammerCId, new[] { ProgrammerBId }, null));
+            AssertDegreesOfSeparationBetweenAAndB(programmerRepository, expected);
+        }
+
         private static IProgrammerRepository StubProgrammerRepository(params IProgrammer[] programmers)
         {
             var programmerRepository = Substitute.For<IProgrammerRepository>();
