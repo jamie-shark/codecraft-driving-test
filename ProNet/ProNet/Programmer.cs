@@ -4,7 +4,7 @@ using System.Linq;
 namespace ProNet
 {
 
-    public interface IProgrammer : IRankable, ISkillable
+    public interface IProgrammer : IRank, ISkillable
     {
     }
 
@@ -33,7 +33,7 @@ namespace ProNet
             return _recommendations;
         }
 
-        public IEnumerable<IRankable> GetRecommenders(IEnumerable<IRankable> programmers)
+        public IEnumerable<IRank> GetRecommenders(IEnumerable<IRank> programmers)
         {
             return programmers.Where(p => p.GetRecommendations().Contains(_id));
         }

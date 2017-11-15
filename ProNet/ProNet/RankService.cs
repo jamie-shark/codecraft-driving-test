@@ -29,7 +29,7 @@ namespace ProNet
             return _programmers.Single(p => p.GetId() == programmerId).Rank;
         }
 
-        private static int RecommendationCount(IRankable programmer)
+        private static int RecommendationCount(IRank programmer)
         {
             return programmer.GetRecommendations().Count();
         }

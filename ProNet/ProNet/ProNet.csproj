@@ -42,7 +42,7 @@
   <ItemGroup>
     <Compile Include="FileService.cs" />
     <Compile Include="IFileService.cs" />
-    <Compile Include="IRankable.cs" />
+    <Compile Include="IRank.cs" />
     <Compile Include="IRankService.cs" />
     <Compile Include="IGetNetwork.cs" />
     <Compile Include="IProNet.cs" />
