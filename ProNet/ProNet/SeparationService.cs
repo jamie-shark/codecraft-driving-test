@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ProNet
 {
@@ -30,33 +31,33 @@ namespace ProNet
 
         private bool AreRelated(IRecommended programmerA, IRecommended programmerB)
         {
-            if (programmerA
-                    .GetRecommendations()
-                    .Intersect(programmerB.GetRecommendations())
-                    .Any())
-                return true;
+            return SharedRecommends(programmerA, programmerB).Any()
+                || SharedRecommenders(programmerA, programmerB).Any()
+                || SecondRecommends(programmerA).Contains(programmerB.GetId())
+                || SecondRecommends(programmerB).Contains(programmerA.GetId());
+        }
 
-            if (programmerA
-                    .GetRecommenders(_programmers.GetAll())
-                    .Intersect(programmerB.GetRecommenders(_programmers.GetAll()))
-                    .Any())
-                return true;
+        private static IEnumerable<string> SharedRecommends(IRecommend programmerA, IRecommend programmerB)
+        {
+            return programmerA
+                .GetRecommendations()
+                .Intersect(programmerB.GetRecommendations());
+        }
 
-            var aSecondDegree =
-                programmerA
-                    .GetRecommendations()
-                    .Select(id => _programmers.GetById(id))
-                    .SelectMany(recommendation => recommendation.GetRecommendations())
-                    .Distinct();
+        private IEnumerable<IRecommended> SharedRecommenders(IRecommended programmerA, IRecommended programmerB)
+        {
+            return programmerA
+                .GetRecommenders(_programmers.GetAll())
+                .Intersect(programmerB.GetRecommenders(_programmers.GetAll()));
+        }
 
-            var bSecondDegree =
-                programmerB
-                    .GetRecommendations()
-                    .Select(id => _programmers.GetById(id))
-                    .SelectMany(recommendation => recommendation.GetRecommendations())
-                    .Distinct();
-
-            return aSecondDegree.Contains(programmerB.GetId()) || bSecondDegree.Contains(programmerA.GetId());
+        private IEnumerable<string> SecondRecommends(IRecommend programmer)
+        {
+            return programmer
+                .GetRecommendations()
+                .Select(id => _programmers.GetById(id))
+                .SelectMany(recommendation => recommendation.GetRecommendations())
+                .Distinct();
         }
     }
 }
