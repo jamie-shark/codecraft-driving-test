@@ -75,15 +75,6 @@ namespace ProNet.Test
             AssertDegreesOfSeparationBetweenAAndB(programmerRepository, expected);
         }
 
-        [Test]
-        public void Throws_argument_exception_when_programmer_not_found()
-        {
-            var programmerRepository = Substitute.For<IGetNetwork>();
-            programmerRepository.GetById("A").Returns(new Programmer("", null, null));
-            Assert.Throws<ArgumentException>(() => new SeparationService(programmerRepository).GetDegreesBetween("invalid", "A"));
-            Assert.Throws<ArgumentException>(() => new SeparationService(programmerRepository).GetDegreesBetween("A", "invalid"));
-        }
-
         private static IGetNetwork StubProgrammerRepository(params IProgrammer[] programmers)
         {
             var programmerRepository = Substitute.For<IGetNetwork>();

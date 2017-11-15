@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 namespace ProNet
 {
     public class SeparationService
     {
-        private readonly List<IProgrammer> _programmers;
+        private readonly IGetNetwork _programmers;
 
         public SeparationService(IGetNetwork getNetwork)
         {
-            _programmers = getNetwork.GetAll().ToList();
+            _programmers = getNetwork;
         }
 
         public int GetDegreesBetween(string programmerAId, string programmerBId)
@@ -18,8 +16,8 @@ namespace ProNet
             if (programmerAId == programmerBId)
                 return -1;
 
-            var programmerA = GetProgrammer(programmerAId);
-            var programmerB = GetProgrammer(programmerBId);
+            var programmerA = _programmers.GetById(programmerAId);
+            var programmerB = _programmers.GetById(programmerBId);
 
             if (programmerA.GetRecommendations().Contains(programmerBId) || programmerB.GetRecommendations().Contains(programmerAId))
                 return 0;
@@ -27,20 +25,20 @@ namespace ProNet
             if (programmerA.GetRecommendations().Intersect(programmerB.GetRecommendations()).Any())
                 return 1;
 
-            if (programmerA.GetRecommenders(_programmers).Intersect(programmerB.GetRecommenders(_programmers)).Any())
+            if (programmerA.GetRecommenders(_programmers.GetAll()).Intersect(programmerB.GetRecommenders(_programmers.GetAll())).Any())
                 return 1;
 
             var aSecondDegree =
                 programmerA
                     .GetRecommendations()
-                    .Select(id => _programmers.Single(p => p.GetId() == id))
+                    .Select(id => _programmers.GetById(id))
                     .SelectMany(recommendation => recommendation.GetRecommendations())
                     .Distinct();
 
             var bSecondDegree =
                 programmerB
                     .GetRecommendations()
-                    .Select(id => _programmers.Single(p => p.GetId() == id))
+                    .Select(id => _programmers.GetById(id))
                     .SelectMany(recommendation => recommendation.GetRecommendations())
                     .Distinct();
 
@@ -48,14 +46,6 @@ namespace ProNet
                 return 1;
 
             return -1;
-        }
-
-        private IProgrammer GetProgrammer(string programmerId)
-        {
-            var programmer = _programmers.SingleOrDefault(p => p.GetId() == programmerId);
-            if (programmer == null)
-                throw new ArgumentException($"Programmer {programmerId} was not found");
-            return programmer;
         }
     }
 }
