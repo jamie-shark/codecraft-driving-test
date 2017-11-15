@@ -9,19 +9,19 @@ namespace ProNet
     //TODO: This was spiked and needs to be test driven
     public class XmlProgrammerRepository : IProgrammerRepository
     {
-        private readonly string _filename;
+        private readonly IFileService _fileService;
 
-        public XmlProgrammerRepository(string filename)
+        public XmlProgrammerRepository(IFileService fileService)
         {
-            _filename = filename;
+            _fileService = fileService;
         }
 
         public IEnumerable<IProgrammer> GetAll()
         {
             var serilaizer = new XmlSerializer(typeof(Network));
-            var network = serilaizer.Deserialize(new FileStream(_filename, FileMode.Open, FileAccess.Read)) as Network;
+            var network = serilaizer.Deserialize(_fileService.GetContents()) as Network;
 
-            if (network == null) throw new FileLoadException($"{_filename} could not be parsed as a Network");
+            if (network == null) throw new FileLoadException($"{_fileService} could not be parsed as a Network");
 
             return network.Programmer.Select(p => new Programmer(p.name, p.Recommendations, p.Skills));
         }

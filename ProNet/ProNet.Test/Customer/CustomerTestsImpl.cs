@@ -8,7 +8,8 @@ namespace ProNet.Test.Customer
         protected override IProNet LoadProNet(string filename)
         {
             // load your implementation here
-            var programmerRepository = new XmlProgrammerRepository(filename);
+            var fileService = new FileService(filename);
+            var programmerRepository = new XmlProgrammerRepository(fileService);
             var rankService = new RankService(programmerRepository);
             var skillsService = new SkillsService(programmerRepository);
 

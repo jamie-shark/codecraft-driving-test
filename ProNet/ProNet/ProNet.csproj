@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileService.cs" />
+    <Compile Include="IFileService.cs" />
     <Compile Include="IRankable.cs" />
     <Compile Include="IRankService.cs" />
     <Compile Include="IProgrammerRepository.cs" />
