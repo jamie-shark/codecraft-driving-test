@@ -20,16 +20,26 @@ namespace ProNet
             var programmerA = _programmers.GetById(programmerAId);
             var programmerB = _programmers.GetById(programmerBId);
 
-            if (programmerA.GetRecommendations().Contains(programmerBId) || programmerB.GetRecommendations().Contains(programmerAId))
+            if (AreDirectlyRelated(programmerA, programmerB))
                 return 0;
 
-            if (AreRelated(programmerA, programmerB))
+            if (AreCloselyRelated(programmerA, programmerB))
                 return 1;
 
             return -1;
         }
 
-        private bool AreRelated(IRecommended programmerA, IRecommended programmerB)
+        private static bool AreDirectlyRelated(IRecommended programmerA, IRecommended programmerB)
+        {
+            return programmerA
+                   .GetRecommendations()
+                   .Contains(programmerB.GetId())
+                || programmerB
+                   .GetRecommendations()
+                   .Contains(programmerA.GetId());
+        }
+
+        private bool AreCloselyRelated(IRecommended programmerA, IRecommended programmerB)
         {
             return SharedRecommends(programmerA, programmerB).Any()
                 || SharedRecommenders(programmerA, programmerB).Any()
