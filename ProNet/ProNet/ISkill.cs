@@ -2,7 +2,7 @@
 
 namespace ProNet
 {
-    public interface ISkillable
+    public interface ISkill
     {
         IEnumerable<string> GetSkills();
     }

@@ -4,7 +4,7 @@ using System.Linq;
 namespace ProNet
 {
 
-    public interface IProgrammer : IRank, ISkillable
+    public interface IProgrammer : IRank, ISkill
     {
     }
 

@@ -46,7 +46,7 @@
     <Compile Include="IRankService.cs" />
     <Compile Include="IGetNetwork.cs" />
     <Compile Include="IProNet.cs" />
-    <Compile Include="ISkillable.cs" />
+    <Compile Include="ISkill.cs" />
     <Compile Include="ISkillsService.cs" />
     <Compile Include="Programmer.cs" />
     <Compile Include="SeparationService.cs" />
