@@ -8,9 +8,9 @@ namespace ProNet
     {
         private readonly List<IProgrammer> _programmers;
 
-        public SeparationService(IProgrammerRepository programmerRepository)
+        public SeparationService(IGetProgrammers getProgrammers)
         {
-            _programmers = programmerRepository.GetAll().ToList();
+            _programmers = getProgrammers.GetAll().ToList();
         }
 
         public int GetDegreesOfSeparation(string programmerAId, string programmerBId)

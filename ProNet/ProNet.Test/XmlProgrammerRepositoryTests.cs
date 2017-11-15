@@ -22,7 +22,7 @@ namespace ProNet.Test
                                         </Programmer>
                                       </Network>";
             fileService.GetContents("file").Returns(new MemoryStream(Encoding.ASCII.GetBytes(contents)));
-            Assert.Throws<ArgumentException>(() => new XmlProgrammerRepository(fileService, "file").GetById("invalid"));
+            Assert.Throws<ArgumentException>(() => new GetProgrammers(fileService, "file").GetById("invalid"));
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace ProNet.Test
             var fileService = Substitute.For<IFileService>();
             const string contents = "invalid network";
             fileService.GetContents("file").Returns(new MemoryStream(Encoding.ASCII.GetBytes(contents)));
-            Assert.Throws<ArgumentException>(() => new XmlProgrammerRepository(fileService, "file").GetAll());
+            Assert.Throws<ArgumentException>(() => new GetProgrammers(fileService, "file").GetAll());
         }
     }
 }

@@ -78,25 +78,25 @@ namespace ProNet.Test
         [Test]
         public void Throws_argument_exception_when_programmer_not_found()
         {
-            var programmerRepository = Substitute.For<IProgrammerRepository>();
+            var programmerRepository = Substitute.For<IGetProgrammers>();
             programmerRepository.GetById("A").Returns(new Programmer("", null, null));
             Assert.Throws<ArgumentException>(() => new SeparationService(programmerRepository).GetDegreesOfSeparation("invalid", "A"));
             Assert.Throws<ArgumentException>(() => new SeparationService(programmerRepository).GetDegreesOfSeparation("A", "invalid"));
         }
 
-        private static IProgrammerRepository StubProgrammerRepository(params IProgrammer[] programmers)
+        private static IGetProgrammers StubProgrammerRepository(params IProgrammer[] programmers)
         {
-            var programmerRepository = Substitute.For<IProgrammerRepository>();
+            var programmerRepository = Substitute.For<IGetProgrammers>();
             foreach (var programmer in programmers)
                 programmerRepository.GetById(programmer.GetId()).Returns(programmer);
             programmerRepository.GetAll().Returns(programmers);
             return programmerRepository;
         }
 
-        private static void AssertDegreesOfSeparationBetweenAAndB(IProgrammerRepository programmerRepository, int expected)
+        private static void AssertDegreesOfSeparationBetweenAAndB(IGetProgrammers getProgrammers, int expected)
         {
-            var degrees = new SeparationService(programmerRepository).GetDegreesOfSeparation(ProgrammerAId, ProgrammerBId);
-            var degreesWithParametersSwapped = new SeparationService(programmerRepository).GetDegreesOfSeparation(ProgrammerBId, ProgrammerAId);
+            var degrees = new SeparationService(getProgrammers).GetDegreesOfSeparation(ProgrammerAId, ProgrammerBId);
+            var degreesWithParametersSwapped = new SeparationService(getProgrammers).GetDegreesOfSeparation(ProgrammerBId, ProgrammerAId);
 
             Assert.That(degrees, Is.EqualTo(expected));
             Assert.That(degrees, Is.EqualTo(degreesWithParametersSwapped));

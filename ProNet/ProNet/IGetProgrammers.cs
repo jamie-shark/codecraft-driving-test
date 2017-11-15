@@ -2,7 +2,7 @@
 
 namespace ProNet
 {
-    public interface IProgrammerRepository
+    public interface IGetProgrammers
     {
         IEnumerable<IProgrammer> GetAll();
         IProgrammer GetById(string id);

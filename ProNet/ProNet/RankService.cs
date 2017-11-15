@@ -6,13 +6,13 @@ namespace ProNet
     public class RankService : IRankService
     {
         private int _iteration;
-        private readonly IProgrammerRepository _programmerRepository;
+        private readonly IGetProgrammers _getProgrammers;
         private readonly List<IProgrammer> _programmers;
 
-        public RankService(IProgrammerRepository programmerRepositoryRepository)
+        public RankService(IGetProgrammers getProgrammers)
         {
-            _programmerRepository = programmerRepositoryRepository;
-            _programmers = _programmerRepository.GetAll().ToList();
+            _getProgrammers = getProgrammers;
+            _programmers = _getProgrammers.GetAll().ToList();
         }
 
         public double GetRank(string programmerId)
@@ -20,7 +20,7 @@ namespace ProNet
             const int settleLimit = 20;
             const double dampingFactor = 0.85d;
 
-            _programmerRepository.GetById(programmerId);
+            _getProgrammers.GetById(programmerId);
 
             while (++_iteration < settleLimit)
                 foreach (var eachProgrammer in _programmers)
