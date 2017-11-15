@@ -1,12 +1,8 @@
-using System.Collections.Generic;
-
 namespace ProNet
 {
-    public interface IRank
+    public interface IRank : IRecommended
     {
         string GetId();
-        IEnumerable<string> GetRecommendations();
-        IEnumerable<IRank> GetRecommenders(IEnumerable<IRank> programmers);
         double Rank { get; set; }
     }
 }

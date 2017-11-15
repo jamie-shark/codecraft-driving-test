@@ -28,7 +28,7 @@ namespace ProNet
             return _programmers.Single(p => p.GetId() == programmerId).Rank;
         }
 
-        private double NewRank(IRank eachProgrammer)
+        private double NewRank(IRecommended eachProgrammer)
         {
             const double dampingFactor = 0.85d;
             return 1 - dampingFactor + dampingFactor * eachProgrammer
@@ -37,7 +37,7 @@ namespace ProNet
                 .Sum();
         }
 
-        private static int RecommendationCount(IRank programmer)
+        private static int RecommendationCount(IRecommend programmer)
         {
             return programmer.GetRecommendations().Count();
         }

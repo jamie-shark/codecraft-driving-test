@@ -46,6 +46,8 @@
     <Compile Include="IRankService.cs" />
     <Compile Include="IGetNetwork.cs" />
     <Compile Include="IProNet.cs" />
+    <Compile Include="IRecommend.cs" />
+    <Compile Include="IRecommended.cs" />
     <Compile Include="ISkill.cs" />
     <Compile Include="ISkillsService.cs" />
     <Compile Include="Programmer.cs" />
