@@ -13,7 +13,7 @@ namespace ProNet
             _programmers = getProgrammers.GetAll().ToList();
         }
 
-        public int GetDegreesOfSeparation(string programmerAId, string programmerBId)
+        public int GetDegreesBetween(string programmerAId, string programmerBId)
         {
             if (programmerAId == programmerBId)
                 return -1;

@@ -17,7 +17,7 @@ namespace ProNet.Test
             var expected = -1;
             var programmerRepository = StubProgrammerRepository(new Programmer(ProgrammerAId, new string[] { }, null));
 
-            var degrees = new SeparationService(programmerRepository).GetDegreesOfSeparation(ProgrammerAId, ProgrammerAId);
+            var degrees = new SeparationService(programmerRepository).GetDegreesBetween(ProgrammerAId, ProgrammerAId);
 
             Assert.That(degrees, Is.EqualTo(expected));
         }
@@ -80,8 +80,8 @@ namespace ProNet.Test
         {
             var programmerRepository = Substitute.For<IGetProgrammers>();
             programmerRepository.GetById("A").Returns(new Programmer("", null, null));
-            Assert.Throws<ArgumentException>(() => new SeparationService(programmerRepository).GetDegreesOfSeparation("invalid", "A"));
-            Assert.Throws<ArgumentException>(() => new SeparationService(programmerRepository).GetDegreesOfSeparation("A", "invalid"));
+            Assert.Throws<ArgumentException>(() => new SeparationService(programmerRepository).GetDegreesBetween("invalid", "A"));
+            Assert.Throws<ArgumentException>(() => new SeparationService(programmerRepository).GetDegreesBetween("A", "invalid"));
         }
 
         private static IGetProgrammers StubProgrammerRepository(params IProgrammer[] programmers)
@@ -95,8 +95,8 @@ namespace ProNet.Test
 
         private static void AssertDegreesOfSeparationBetweenAAndB(IGetProgrammers getProgrammers, int expected)
         {
-            var degrees = new SeparationService(getProgrammers).GetDegreesOfSeparation(ProgrammerAId, ProgrammerBId);
-            var degreesWithParametersSwapped = new SeparationService(getProgrammers).GetDegreesOfSeparation(ProgrammerBId, ProgrammerAId);
+            var degrees = new SeparationService(getProgrammers).GetDegreesBetween(ProgrammerAId, ProgrammerBId);
+            var degreesWithParametersSwapped = new SeparationService(getProgrammers).GetDegreesBetween(ProgrammerBId, ProgrammerAId);
 
             Assert.That(degrees, Is.EqualTo(expected));
             Assert.That(degrees, Is.EqualTo(degreesWithParametersSwapped));
