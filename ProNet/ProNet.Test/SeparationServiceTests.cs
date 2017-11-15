@@ -93,7 +93,7 @@ namespace ProNet.Test
             return programmerRepository;
         }
 
-        private void AssertDegreesOfSeparationBetweenAAndB(IProgrammerRepository programmerRepository, int expected)
+        private static void AssertDegreesOfSeparationBetweenAAndB(IProgrammerRepository programmerRepository, int expected)
         {
             var degrees = new SeparationService(programmerRepository).GetDegreesOfSeparation(ProgrammerAId, ProgrammerBId);
             var degreesWithParametersSwapped = new SeparationService(programmerRepository).GetDegreesOfSeparation(ProgrammerBId, ProgrammerAId);
