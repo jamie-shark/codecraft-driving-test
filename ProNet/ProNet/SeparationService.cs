@@ -30,21 +30,21 @@ namespace ProNet
             if (programmerA.GetRecommenders(_programmers).Intersect(programmerB.GetRecommenders(_programmers)).Any())
                 return 1;
 
-            var programmerASecondDegreeRelations =
+            var aSecondDegree =
                 programmerA
                     .GetRecommendations()
                     .Select(id => _programmers.Single(p => p.GetId() == id))
                     .SelectMany(recommendation => recommendation.GetRecommendations())
                     .Distinct();
 
-            var programmerBSecondDegreeRelations =
+            var bSecondDegree =
                 programmerB
                     .GetRecommendations()
                     .Select(id => _programmers.Single(p => p.GetId() == id))
                     .SelectMany(recommendation => recommendation.GetRecommendations())
                     .Distinct();
 
-            if (programmerASecondDegreeRelations.Contains(programmerBId) || programmerBSecondDegreeRelations.Contains(programmerAId))
+            if (aSecondDegree.Contains(programmerBId) || bSecondDegree.Contains(programmerAId))
                 return 1;
 
             return -1;
