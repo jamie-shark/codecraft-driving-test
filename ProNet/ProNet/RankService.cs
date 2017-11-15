@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace ProNet
@@ -7,11 +6,13 @@ namespace ProNet
     public class RankService : IRankService
     {
         private int _iteration;
-        private readonly IEnumerable<IProgrammer> _programmers;
+        private readonly IProgrammerRepository _programmerRepository;
+        private readonly List<IProgrammer> _programmers;
 
-        public RankService(IProgrammerRepository programmerRepository)
+        public RankService(IProgrammerRepository programmerRepositoryRepository)
         {
-            _programmers = programmerRepository.GetAll().ToArray();
+            _programmerRepository = programmerRepositoryRepository;
+            _programmers = _programmerRepository.GetAll().ToList();
         }
 
         public double GetRank(string programmerId)
@@ -19,18 +20,13 @@ namespace ProNet
             const int settleLimit = 20;
             const double dampingFactor = 0.85d;
 
-            while (++_iteration < settleLimit)
-                foreach (var programmer in _programmers)
-                    programmer.Rank = 1 - dampingFactor + dampingFactor * programmer.GetRecommenders(_programmers).Select(p => GetRank(p.GetId()) / RecommendationCount(p)).Sum();
+            _programmerRepository.GetById(programmerId);
 
-            try
-            {
-                return _programmers.Single(programmer => programmer.GetId() == programmerId).Rank;
-            }
-            catch (InvalidOperationException e)
-            {
-                throw new ArgumentException($"Programmer {programmerId} was not found");
-            }
+            while (++_iteration < settleLimit)
+                foreach (var eachProgrammer in _programmers)
+                    eachProgrammer.Rank = 1 - dampingFactor + dampingFactor * eachProgrammer.GetRecommenders(_programmers).Select(p => GetRank(p.GetId()) / RecommendationCount(p)).Sum();
+
+            return _programmers.Single(p => p.GetId() == programmerId).Rank;
         }
 
         private static int RecommendationCount(IRankable programmer)
