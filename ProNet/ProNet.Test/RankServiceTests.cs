@@ -59,7 +59,7 @@ namespace ProNet.Test
 
         private static void AssertRanksAgainstExpectedResults(List<Programmer> programmers, IReadOnlyDictionary<string, double> expectedResults)
         {
-            var programmerRepository = Substitute.For<IGetProgrammers>();
+            var programmerRepository = Substitute.For<IGetNetwork>();
             programmerRepository.GetAll().Returns(programmers);
             programmers.ForEach(programmer => programmerRepository.GetById(programmer.GetId()).Returns(programmer));
 

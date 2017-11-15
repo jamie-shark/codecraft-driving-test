@@ -11,7 +11,7 @@ namespace ProNet.Test
         public void GetSkills_calls_ProgrammerRepository_with_given_id(string expectedSkills)
         {
             var id = "programmer id";
-            var programmerRepository = Substitute.For<IGetProgrammers>();
+            var programmerRepository = Substitute.For<IGetNetwork>();
             programmerRepository.GetById(id).Returns(new Programmer(id, null, new[] {expectedSkills}));
             var skillsService = new SkillsService(programmerRepository);
             var skills = skillsService.GetSkills(id);

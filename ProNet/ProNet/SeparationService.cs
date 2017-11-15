@@ -8,9 +8,9 @@ namespace ProNet
     {
         private readonly List<IProgrammer> _programmers;
 
-        public SeparationService(IGetProgrammers getProgrammers)
+        public SeparationService(IGetNetwork getNetwork)
         {
-            _programmers = getProgrammers.GetAll().ToList();
+            _programmers = getNetwork.GetAll().ToList();
         }
 
         public int GetDegreesBetween(string programmerAId, string programmerBId)
