@@ -1,14 +1,15 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ProNet
 {
     public class SeparationService
     {
-        private readonly IProgrammerRepository _programmerRepository;
+        private readonly List<IProgrammer> _programmers;
 
         public SeparationService(IProgrammerRepository programmerRepository)
         {
-            _programmerRepository = programmerRepository;
+            _programmers = programmerRepository.GetAll().ToList();
         }
 
         public int GetDegreesOfSeparation(string programmerAId, string programmerBId)
@@ -16,8 +17,8 @@ namespace ProNet
             if (programmerAId == programmerBId)
                 return -1;
 
-            var programmerA = _programmerRepository.GetById(programmerAId);
-            var programmerB = _programmerRepository.GetById(programmerBId);
+            var programmerA = _programmers.Single(p => p.GetId() == programmerAId);
+            var programmerB = _programmers.Single(p => p.GetId() == programmerBId);
 
             if (programmerA.GetRecommendations().Contains(programmerBId) || programmerB.GetRecommendations().Contains(programmerAId))
                 return 0;
@@ -25,22 +26,20 @@ namespace ProNet
             if (programmerA.GetRecommendations().Intersect(programmerB.GetRecommendations()).Any())
                 return 1;
 
-            var programmers = _programmerRepository.GetAll().ToList();
-            if (programmerA.GetRecommenders(programmers).Intersect(programmerB.GetRecommenders(programmers)).Any())
+            if (programmerA.GetRecommenders(_programmers).Intersect(programmerB.GetRecommenders(_programmers)).Any())
                 return 1;
 
-            //TODO: This should be done by recursively calling this method for the second degree relations
             var programmerASecondDegreeRelations =
                 programmerA
                     .GetRecommendations()
-                    .Select(id => _programmerRepository.GetById(id))
+                    .Select(id => _programmers.Single(p => p.GetId() == id))
                     .SelectMany(recommendation => recommendation.GetRecommendations())
                     .Distinct();
 
             var programmerBSecondDegreeRelations =
                 programmerB
                     .GetRecommendations()
-                    .Select(id => _programmerRepository.GetById(id))
+                    .Select(id => _programmers.Single(p => p.GetId() == id))
                     .SelectMany(recommendation => recommendation.GetRecommendations())
                     .Distinct();
 
