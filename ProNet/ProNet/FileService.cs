@@ -4,16 +4,9 @@ namespace ProNet
 {
     public class FileService : IFileService
     {
-        private readonly string _file;
-
-        public FileService(string file)
+        public Stream GetContents(string filePath)
         {
-            _file = file;
-        }
-
-        public Stream GetContents()
-        {
-            return new FileStream(_file, FileMode.Open, FileAccess.Read);
+            return new FileStream(filePath, FileMode.Open, FileAccess.Read);
         }
     }
 }

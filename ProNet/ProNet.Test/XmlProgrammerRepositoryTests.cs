@@ -21,8 +21,17 @@ namespace ProNet.Test
                                           </Skills>
                                         </Programmer>
                                       </Network>";
-            fileService.GetContents().Returns(new MemoryStream(Encoding.ASCII.GetBytes(contents)));
-            Assert.Throws<ArgumentException>(() => new XmlProgrammerRepository(fileService).GetById("invalid"));
+            fileService.GetContents("file").Returns(new MemoryStream(Encoding.ASCII.GetBytes(contents)));
+            Assert.Throws<ArgumentException>(() => new XmlProgrammerRepository(fileService, "file").GetById("invalid"));
+        }
+
+        [Test]
+        public void Throws_Argument_Exception_when_file_cannot_be_parsed_as_network()
+        {
+            var fileService = Substitute.For<IFileService>();
+            const string contents = "invalid network";
+            fileService.GetContents("file").Returns(new MemoryStream(Encoding.ASCII.GetBytes(contents)));
+            Assert.Throws<ArgumentException>(() => new XmlProgrammerRepository(fileService, "file").GetAll());
         }
     }
 }

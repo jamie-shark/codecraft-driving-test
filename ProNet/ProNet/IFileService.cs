@@ -4,6 +4,6 @@ namespace ProNet
 {
     public interface IFileService
     {
-        Stream GetContents();
+        Stream GetContents(string filePath);
     }
 }
