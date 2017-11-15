@@ -33,7 +33,7 @@ namespace ProNet
             return _recommendations;
         }
 
-        public IEnumerable<IRank> GetRecommenders(IEnumerable<IRank> programmers)
+        public IEnumerable<IRecommended> GetRecommenders(IEnumerable<IRecommended> programmers)
         {
             return programmers.Where(p => p.GetRecommendations().Contains(_id));
         }

@@ -4,6 +4,7 @@ namespace ProNet
 {
     public interface IRecommended : IRecommend
     {
-        IEnumerable<IRank> GetRecommenders(IEnumerable<IRank> programmers);
+        string GetId();
+        IEnumerable<IRecommended> GetRecommenders(IEnumerable<IRecommended> programmers);
     }
 }

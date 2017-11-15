@@ -22,11 +22,25 @@ namespace ProNet
             if (programmerA.GetRecommendations().Contains(programmerBId) || programmerB.GetRecommendations().Contains(programmerAId))
                 return 0;
 
-            if (programmerA.GetRecommendations().Intersect(programmerB.GetRecommendations()).Any())
+            if (AreRelated(programmerA, programmerB))
                 return 1;
 
-            if (programmerA.GetRecommenders(_programmers.GetAll()).Intersect(programmerB.GetRecommenders(_programmers.GetAll())).Any())
-                return 1;
+            return -1;
+        }
+
+        private bool AreRelated(IRecommended programmerA, IRecommended programmerB)
+        {
+            if (programmerA
+                    .GetRecommendations()
+                    .Intersect(programmerB.GetRecommendations())
+                    .Any())
+                return true;
+
+            if (programmerA
+                    .GetRecommenders(_programmers.GetAll())
+                    .Intersect(programmerB.GetRecommenders(_programmers.GetAll()))
+                    .Any())
+                return true;
 
             var aSecondDegree =
                 programmerA
@@ -42,10 +56,7 @@ namespace ProNet
                     .SelectMany(recommendation => recommendation.GetRecommendations())
                     .Distinct();
 
-            if (aSecondDegree.Contains(programmerBId) || bSecondDegree.Contains(programmerAId))
-                return 1;
-
-            return -1;
+            return aSecondDegree.Contains(programmerB.GetId()) || bSecondDegree.Contains(programmerA.GetId());
         }
     }
 }
