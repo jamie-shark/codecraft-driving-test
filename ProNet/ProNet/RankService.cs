@@ -18,15 +18,23 @@ namespace ProNet
         public double GetRank(string programmerId)
         {
             const int settleLimit = 20;
-            const double dampingFactor = 0.85d;
 
             _getNetwork.GetById(programmerId);
 
             while (++_iteration < settleLimit)
                 foreach (var eachProgrammer in _programmers)
-                    eachProgrammer.Rank = 1 - dampingFactor + dampingFactor * eachProgrammer.GetRecommenders(_programmers).Select(p => GetRank(p.GetId()) / RecommendationCount(p)).Sum();
+                    eachProgrammer.Rank = NewRank(eachProgrammer);
 
             return _programmers.Single(p => p.GetId() == programmerId).Rank;
+        }
+
+        private double NewRank(IRank eachProgrammer)
+        {
+            const double dampingFactor = 0.85d;
+            return 1 - dampingFactor + dampingFactor * eachProgrammer
+                .GetRecommenders(_programmers)
+                .Select(p => GetRank(p.GetId()) / RecommendationCount(p))
+                .Sum();
         }
 
         private static int RecommendationCount(IRank programmer)
