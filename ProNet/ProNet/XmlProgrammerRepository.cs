@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Xml;
 using System.Xml.Serialization;
 
 namespace ProNet
@@ -26,9 +24,9 @@ namespace ProNet
             try
             {
                 var serilaizer = new XmlSerializer(typeof(Network));
-                network = serilaizer.Deserialize(_fileService.GetContents(_networkFilePath)) as Network;
+                network = (Network) serilaizer.Deserialize(_fileService.GetContents(_networkFilePath));
             }
-            catch (InvalidOperationException e)
+            catch (Exception e) when (e is InvalidOperationException || e is InvalidCastException)
             {
                 throw new ArgumentException($"File {_networkFilePath} is not a valid ProNet data file");
             }
