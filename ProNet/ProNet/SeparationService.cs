@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ProNet
@@ -17,8 +18,8 @@ namespace ProNet
             if (programmerAId == programmerBId)
                 return -1;
 
-            var programmerA = _programmers.Single(p => p.GetId() == programmerAId);
-            var programmerB = _programmers.Single(p => p.GetId() == programmerBId);
+            var programmerA = GetProgrammer(programmerAId);
+            var programmerB = GetProgrammer(programmerBId);
 
             if (programmerA.GetRecommendations().Contains(programmerBId) || programmerB.GetRecommendations().Contains(programmerAId))
                 return 0;
@@ -47,6 +48,14 @@ namespace ProNet
                 return 1;
 
             return -1;
+        }
+
+        private IProgrammer GetProgrammer(string programmerId)
+        {
+            var programmer = _programmers.SingleOrDefault(p => p.GetId() == programmerId);
+            if (programmer == null)
+                throw new ArgumentException($"Programmer {programmerId} was not found");
+            return programmer;
         }
     }
 }

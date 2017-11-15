@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using System;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace ProNet.Test
@@ -72,6 +73,15 @@ namespace ProNet.Test
                 new Programmer(ProgrammerBId, new string[] { }, null),
                 new Programmer(ProgrammerCId, new[] { ProgrammerBId }, null));
             AssertDegreesOfSeparationBetweenAAndB(programmerRepository, expected);
+        }
+
+        [Test]
+        public void Throws_argument_exception_when_programmer_not_found()
+        {
+            var programmerRepository = Substitute.For<IProgrammerRepository>();
+            programmerRepository.GetById("A").Returns(new Programmer("", null, null));
+            Assert.Throws<ArgumentException>(() => new SeparationService(programmerRepository).GetDegreesOfSeparation("invalid", "A"));
+            Assert.Throws<ArgumentException>(() => new SeparationService(programmerRepository).GetDegreesOfSeparation("A", "invalid"));
         }
 
         private static IProgrammerRepository StubProgrammerRepository(params IProgrammer[] programmers)
