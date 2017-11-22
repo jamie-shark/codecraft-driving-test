@@ -49,6 +49,7 @@
     <Compile Include="IProNet.cs" />
     <Compile Include="IRecommend.cs" />
     <Compile Include="IRecommended.cs" />
+    <Compile Include="ISeparationService.cs" />
     <Compile Include="ISkill.cs" />
     <Compile Include="ISkillsService.cs" />
     <Compile Include="Programmer.cs" />

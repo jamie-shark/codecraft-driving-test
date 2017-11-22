@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ProNet
 {
-    public class SeparationService
+    public class SeparationService : ISeparationService
     {
         private readonly IGetNetwork _programmers;
         private readonly List<string> _visited;

@@ -12,8 +12,9 @@ namespace ProNet.Test.Customer
             var programmerRepository = new GetNetwork(fileService, filename);
             var rankService = new RankService(programmerRepository);
             var skillsService = new SkillsService(programmerRepository);
+            var separationService = new SeparationService(programmerRepository);
 
-            return new ProNet(rankService, skillsService);
+            return new ProNet(rankService, skillsService, separationService);
         }
     }
 }

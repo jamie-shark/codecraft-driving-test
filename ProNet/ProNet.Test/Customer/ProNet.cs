@@ -4,11 +4,13 @@
     {
         private readonly IRankService _rankService;
         private readonly ISkillsService _skillsService;
+        private readonly ISeparationService _separationService;
 
-        public ProNet(IRankService rankService, ISkillsService skillsService)
+        public ProNet(IRankService rankService, ISkillsService skillsService, ISeparationService separationService)
         {
             _rankService = rankService;
             _skillsService = skillsService;
+            _separationService = separationService;
         }
 
         public string[] Skills(string programmer)
@@ -28,7 +30,7 @@
 
         public int DegreesOfSeparation(string programmer1, string programmer2)
         {
-            return 0;
+            return _separationService.GetDegreesBetween(programmer1, programmer2);
         }
 
         public double TeamStrength(string language, string[] team)
