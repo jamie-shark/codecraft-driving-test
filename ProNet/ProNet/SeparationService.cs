@@ -29,7 +29,7 @@ namespace ProNet
             return -1;
         }
 
-        private static bool AreDirectlyRelated(IRecommended programmerA, IRecommended programmerB)
+        private static bool AreDirectlyRelated(IRecommend programmerA, IRecommend programmerB)
         {
             return programmerA
                    .GetRecommendations()
@@ -39,7 +39,7 @@ namespace ProNet
                    .Contains(programmerA.GetId());
         }
 
-        private bool AreCloselyRelated(IRecommended programmerA, IRecommended programmerB)
+        private bool AreCloselyRelated(IProgrammer programmerA, IProgrammer programmerB)
         {
             return SharedRecommends(programmerA, programmerB).Any()
                 || SharedRecommenders(programmerA, programmerB).Any()
@@ -54,7 +54,7 @@ namespace ProNet
                 .Intersect(programmerB.GetRecommendations());
         }
 
-        private IEnumerable<IRecommended> SharedRecommenders(IRecommended programmerA, IRecommended programmerB)
+        private IEnumerable<IRecommend> SharedRecommenders(IRecommended programmerA, IRecommended programmerB)
         {
             return programmerA
                 .GetRecommenders(_programmers.GetAll())

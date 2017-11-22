@@ -2,9 +2,8 @@
 
 namespace ProNet
 {
-    public interface IRecommended : IRecommend
+    public interface IRecommended : IIdentifiable
     {
-        string GetId();
-        IEnumerable<IRecommended> GetRecommenders(IEnumerable<IRecommended> programmers);
+        IEnumerable<IRecommend> GetRecommenders(IEnumerable<IRecommend> programmers);
     }
 }

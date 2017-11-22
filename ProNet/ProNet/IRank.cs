@@ -1,6 +1,6 @@
 namespace ProNet
 {
-    public interface IRank : IRecommended
+    public interface IRank
     {
         double Rank { get; set; }
     }

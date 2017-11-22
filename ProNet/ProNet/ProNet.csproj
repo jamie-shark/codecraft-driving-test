@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="FileService.cs" />
     <Compile Include="IFileService.cs" />
+    <Compile Include="IIdentifiable.cs" />
     <Compile Include="IRank.cs" />
     <Compile Include="IRankService.cs" />
     <Compile Include="IGetNetwork.cs" />

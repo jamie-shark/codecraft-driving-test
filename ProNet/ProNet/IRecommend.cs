@@ -2,7 +2,7 @@
 
 namespace ProNet
 {
-    public interface IRecommend
+    public interface IRecommend : IIdentifiable
     {
         IEnumerable<string> GetRecommendations();
     }
