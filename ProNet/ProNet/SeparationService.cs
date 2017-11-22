@@ -7,13 +7,13 @@ namespace ProNet
     {
         private readonly IGetNetwork _programmers;
         private readonly List<string> _visited;
-        private readonly Queue<string> _queue;
+        private readonly Queue<Node> _queue;
 
         public SeparationService(IGetNetwork getNetwork)
         {
             _programmers = getNetwork;
             _visited = new List<string>();
-            _queue = new Queue<string>();
+            _queue = new Queue<Node>();
         }
 
         public int GetDegreesBetween(string id, string goalId)
@@ -23,25 +23,27 @@ namespace ProNet
 
             var goalProgrammer = _programmers.GetById(goalId);
 
-            _queue.Enqueue(id);
-            var depth = 0;
+            _queue.Enqueue(new Node(id, 0));
 
             while (_queue.Count > 0)
             {
-                var currentId = _queue.Dequeue();
-                _visited.Add(currentId);
-                var currentProgrammer = _programmers.GetById(currentId);
+                var currentNode = _queue.Dequeue();
+
+                _visited.Add(currentNode.Id);
+
+                var currentProgrammer = _programmers.GetById(currentNode.Id);
 
                 if (AreDirectlyRelated(currentProgrammer, goalProgrammer))
-                    return depth;
+                    return currentNode.Depth;
 
                 var recommenders = currentProgrammer.GetRecommenders(_programmers.GetAll()).Select(p => p.GetId());
-                var neighbours = currentProgrammer.GetRecommendations().Concat(recommenders);
+                var neighbours = currentProgrammer
+                    .GetRecommendations()
+                    .Concat(recommenders);
 
-                foreach (var neighbour in neighbours.Where(n => !_visited.Contains(n)))
-                    _queue.Enqueue(neighbour);
-
-                ++depth;
+                foreach (var neighbour in neighbours)
+                    if (!_visited.Contains(neighbour))
+                        _queue.Enqueue(new Node(neighbour, currentNode.Depth + 1));
             }
 
             return -1;
@@ -56,5 +58,18 @@ namespace ProNet
                    .GetRecommendations()
                    .Contains(programmerA.GetId());
         }
+    }
+
+    internal class Node
+    {
+        public string Id { get; }
+        public int Depth { get; }
+
+        public Node(string id, int depth)
+        {
+            Id = id;
+            Depth = depth;
+        }
+
     }
 }
