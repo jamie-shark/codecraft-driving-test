@@ -6,25 +6,43 @@ namespace ProNet
     public class SeparationService
     {
         private readonly IGetNetwork _programmers;
+        private readonly List<string> _visited;
+        private readonly Queue<string> _queue;
 
         public SeparationService(IGetNetwork getNetwork)
         {
             _programmers = getNetwork;
+            _visited = new List<string>();
+            _queue = new Queue<string>();
         }
 
-        public int GetDegreesBetween(string programmerAId, string programmerBId)
+        public int GetDegreesBetween(string id, string goalId)
         {
-            if (programmerAId == programmerBId)
+            if (id == goalId)
                 return -1;
 
-            var programmerA = _programmers.GetById(programmerAId);
-            var programmerB = _programmers.GetById(programmerBId);
+            var goalProgrammer = _programmers.GetById(goalId);
 
-            if (AreDirectlyRelated(programmerA, programmerB))
-                return 0;
+            _queue.Enqueue(id);
+            var depth = 0;
 
-            if (AreCloselyRelated(programmerA, programmerB))
-                return 1;
+            while (_queue.Count > 0)
+            {
+                var currentId = _queue.Dequeue();
+                _visited.Add(currentId);
+                var currentProgrammer = _programmers.GetById(currentId);
+
+                if (AreDirectlyRelated(currentProgrammer, goalProgrammer))
+                    return depth;
+
+                var recommenders = currentProgrammer.GetRecommenders(_programmers.GetAll()).Select(p => p.GetId());
+                var neighbours = currentProgrammer.GetRecommendations().Concat(recommenders);
+
+                foreach (var neighbour in neighbours.Where(n => !_visited.Contains(n)))
+                    _queue.Enqueue(neighbour);
+
+                ++depth;
+            }
 
             return -1;
         }
@@ -37,37 +55,6 @@ namespace ProNet
                 || programmerB
                    .GetRecommendations()
                    .Contains(programmerA.GetId());
-        }
-
-        private bool AreCloselyRelated(IProgrammer programmerA, IProgrammer programmerB)
-        {
-            return SharedRecommends(programmerA, programmerB).Any()
-                || SharedRecommenders(programmerA, programmerB).Any()
-                || SecondRecommends(programmerA).Contains(programmerB.GetId())
-                || SecondRecommends(programmerB).Contains(programmerA.GetId());
-        }
-
-        private static IEnumerable<string> SharedRecommends(IRecommend programmerA, IRecommend programmerB)
-        {
-            return programmerA
-                .GetRecommendations()
-                .Intersect(programmerB.GetRecommendations());
-        }
-
-        private IEnumerable<IRecommend> SharedRecommenders(IRecommended programmerA, IRecommended programmerB)
-        {
-            return programmerA
-                .GetRecommenders(_programmers.GetAll())
-                .Intersect(programmerB.GetRecommenders(_programmers.GetAll()));
-        }
-
-        private IEnumerable<string> SecondRecommends(IRecommend programmer)
-        {
-            return programmer
-                .GetRecommendations()
-                .Select(id => _programmers.GetById(id))
-                .SelectMany(recommendation => recommendation.GetRecommendations())
-                .Distinct();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using NSubstitute;
+﻿using NSubstitute;
 using NUnit.Framework;
 
 namespace ProNet.Test
@@ -10,6 +9,7 @@ namespace ProNet.Test
         private const string ProgrammerAId = "a";
         private const string ProgrammerBId = "b";
         private const string ProgrammerCId = "c";
+        private const string ProgrammerDId = "d";
 
         [Test]
         public void Separation_with_self()
@@ -72,6 +72,18 @@ namespace ProNet.Test
                 new Programmer(ProgrammerAId, new[] { ProgrammerCId }, null),
                 new Programmer(ProgrammerBId, new string[] { }, null),
                 new Programmer(ProgrammerCId, new[] { ProgrammerBId }, null));
+            AssertDegreesOfSeparationBetweenAAndB(programmerRepository, expected);
+        }
+
+        [Test]
+        public void Separation_with_multiple_degrees()
+        {
+            var expected = 2;
+            var programmerRepository = StubProgrammerRepository(
+                new Programmer(ProgrammerAId, new[] { ProgrammerCId }, null),
+                new Programmer(ProgrammerBId, new string[] { }, null),
+                new Programmer(ProgrammerCId, new[] { ProgrammerDId }, null),
+                new Programmer(ProgrammerDId, new[] { ProgrammerBId }, null));
             AssertDegreesOfSeparationBetweenAAndB(programmerRepository, expected);
         }
 
