@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace ProNet
 {
@@ -8,6 +9,9 @@ namespace ProNet
         {
             if (network.Programmer == null)
                 throw new ArgumentException("Network has no list of programmers");
+
+            if (network.Programmer.Any(item => item.name == null))
+                throw new ArgumentException("Network has a programmer with no name");
         }
     }
 }
