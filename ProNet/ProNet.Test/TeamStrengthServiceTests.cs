@@ -1,26 +1,17 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace ProNet.Test
 {
     [TestFixture]
     public class TeamStrengthServiceTests
     {
-        [Test]
-        public void Strength_of_empty_team_is_zero()
+        [TestCase("", new string[] {}, 0)]
+        [TestCase("", new[] { "leader" }, 0)]
+        public void Strength_of_empty_team_is_zero(string language, IEnumerable<string> team, decimal expected)
         {
-            var language = "";
-            var team = new string[] {};
             var strength = new TeamStrengthService().GetStrength(language, team);
-            Assert.That(strength, Is.EqualTo(0));
-        }
-
-        [Test]
-        public void Strength_of_leader_only_team_is_zero()
-        {
-            var language = "";
-            var team = new [] { "leader" };
-            var strength = new TeamStrengthService().GetStrength(language, team);
-            Assert.That(strength, Is.EqualTo(0));
+            Assert.That(strength, Is.EqualTo(expected));
         }
     }
 }
