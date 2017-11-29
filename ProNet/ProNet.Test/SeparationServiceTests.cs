@@ -10,6 +10,7 @@ namespace ProNet.Test
         private const string ProgrammerBId = "b";
         private const string ProgrammerCId = "c";
         private const string ProgrammerDId = "d";
+        private const string ProgrammerEId = "e";
 
         [Test]
         public void Separation_with_self()
@@ -84,6 +85,19 @@ namespace ProNet.Test
                 new Programmer(ProgrammerBId, new string[] { }, null),
                 new Programmer(ProgrammerCId, new[] { ProgrammerDId }, null),
                 new Programmer(ProgrammerDId, new[] { ProgrammerBId }, null));
+            AssertDegreesOfSeparationBetweenAAndB(programmerRepository, expected);
+        }
+
+        [Test]
+        public void Separation_with_a_loop_does_not_interfere()
+        {
+            var expected = 2;
+            var programmerRepository = StubProgrammerRepository(
+                new Programmer(ProgrammerAId, new[] { ProgrammerCId }, null),
+                new Programmer(ProgrammerBId, new string[] { }, null),
+                new Programmer(ProgrammerCId, new[] { ProgrammerDId, ProgrammerEId }, null),
+                new Programmer(ProgrammerDId, new[] { ProgrammerAId }, null),
+                new Programmer(ProgrammerEId, new[] { ProgrammerBId }, null));
             AssertDegreesOfSeparationBetweenAAndB(programmerRepository, expected);
         }
 
