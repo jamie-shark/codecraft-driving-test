@@ -15,7 +15,7 @@ namespace ProNet.Test
         [Test]
         public void Separation_with_self()
         {
-            var expected = -1;
+            var expected = 0;
             var programmerRepository = StubProgrammerRepository(new Programmer(ProgrammerAId, new string[] { }, null));
 
             var degrees = new SeparationService(programmerRepository).GetDegreesBetween(ProgrammerAId, ProgrammerAId);
@@ -26,7 +26,7 @@ namespace ProNet.Test
         [Test]
         public void Separation_with_no_connection()
         {
-            var expected = -1;
+            var expected = 0;
             var programmerRepository = StubProgrammerRepository(
                 new Programmer(ProgrammerAId, new string[] { }, null),
                 new Programmer(ProgrammerBId, new string[] { }, null));
@@ -36,7 +36,7 @@ namespace ProNet.Test
         [Test]
         public void Separation_with_neighbour()
         {
-            var expected = 0;
+            var expected = 1;
             var programmerRepository = StubProgrammerRepository(
                 new Programmer(ProgrammerAId, new[] {ProgrammerBId}, null),
                 new Programmer(ProgrammerBId, new string[] { }, null));
@@ -46,7 +46,7 @@ namespace ProNet.Test
         [Test]
         public void Separation_with_a_shared_recommendation()
         {
-            var expected = 1;
+            var expected = 2;
             var programmerRepository = StubProgrammerRepository(
                 new Programmer(ProgrammerAId, new[] { ProgrammerCId }, null),
                 new Programmer(ProgrammerBId, new[] { ProgrammerCId }, null),
@@ -57,7 +57,7 @@ namespace ProNet.Test
         [Test]
         public void Separation_with_a_shared_recommender()
         {
-            var expected = 1;
+            var expected = 2;
             var programmerRepository = StubProgrammerRepository(
                 new Programmer(ProgrammerAId, new string[] { }, null),
                 new Programmer(ProgrammerBId, new string[] { }, null),
@@ -68,7 +68,7 @@ namespace ProNet.Test
         [Test]
         public void Separation_with_a_one_way_second_degree_connection()
         {
-            var expected = 1;
+            var expected = 2;
             var programmerRepository = StubProgrammerRepository(
                 new Programmer(ProgrammerAId, new[] { ProgrammerCId }, null),
                 new Programmer(ProgrammerBId, new string[] { }, null),
@@ -79,7 +79,7 @@ namespace ProNet.Test
         [Test]
         public void Separation_with_multiple_degrees()
         {
-            var expected = 2;
+            var expected = 3;
             var programmerRepository = StubProgrammerRepository(
                 new Programmer(ProgrammerAId, new[] { ProgrammerCId }, null),
                 new Programmer(ProgrammerBId, new string[] { }, null),
@@ -91,7 +91,7 @@ namespace ProNet.Test
         [Test]
         public void Separation_with_a_loop_does_not_interfere()
         {
-            var expected = 2;
+            var expected = 3;
             var programmerRepository = StubProgrammerRepository(
                 new Programmer(ProgrammerAId, new[] { ProgrammerCId }, null),
                 new Programmer(ProgrammerBId, new string[] { }, null),

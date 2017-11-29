@@ -19,11 +19,11 @@ namespace ProNet
         public int GetDegreesBetween(string id, string goalId)
         {
             if (id == goalId)
-                return -1;
+                return 0;
 
             var goalProgrammer = _programmers.GetById(goalId);
 
-            _queue.Enqueue(new Node(id, 0));
+            _queue.Enqueue(new Node(id, 1));
 
             while (_queue.Count > 0)
             {
@@ -46,7 +46,7 @@ namespace ProNet
                         _queue.Enqueue(new Node(neighbour, currentNode.Depth + 1));
             }
 
-            return -1;
+            return 0;
         }
 
         private static bool AreDirectlyRelated(IRecommend programmerA, IRecommend programmerB)
