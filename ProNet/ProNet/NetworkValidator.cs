@@ -15,6 +15,9 @@ namespace ProNet
 
             if (network.Programmer.Any(item => item.Recommendations == null))
                 throw new ArgumentException("Network has a programmer with no Recommendations");
+
+            if (network.Programmer.Any(item => item.Skills == null))
+                throw new ArgumentException("Network has a programmer with no Skills");
         }
     }
 }
