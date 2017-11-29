@@ -4,16 +4,16 @@ namespace ProNet
 {
     public class SkillsService : ISkillsService
     {
-        private readonly IGetNetwork _getNetwork;
+        private readonly INetworkRepository _networkRepository;
 
-        public SkillsService(IGetNetwork getNetwork)
+        public SkillsService(INetworkRepository networkRepository)
         {
-            _getNetwork = getNetwork;
+            _networkRepository = networkRepository;
         }
 
         public IEnumerable<string> GetSkills(string programmerId)
         {
-            return _getNetwork.GetById(programmerId).GetSkills();
+            return _networkRepository.GetById(programmerId).GetSkills();
         }
     }
 }

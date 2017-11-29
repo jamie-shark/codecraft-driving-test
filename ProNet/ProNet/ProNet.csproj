@@ -45,7 +45,7 @@
     <Compile Include="IIdentifiable.cs" />
     <Compile Include="IRank.cs" />
     <Compile Include="IRankService.cs" />
-    <Compile Include="IGetNetwork.cs" />
+    <Compile Include="INetworkRepository.cs" />
     <Compile Include="IProNet.cs" />
     <Compile Include="IRecommend.cs" />
     <Compile Include="IRecommendationService.cs" />
@@ -60,7 +60,7 @@
     <Compile Include="XmlNetworkParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RankService.cs" />
-    <Compile Include="GetNetwork.cs" />
+    <Compile Include="NetworkRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="requirements.txt" />

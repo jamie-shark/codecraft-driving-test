@@ -101,19 +101,19 @@ namespace ProNet.Test
             AssertDegreesOfSeparationBetweenAAndB(programmerRepository, expected);
         }
 
-        private static IGetNetwork StubProgrammerRepository(params IProgrammer[] programmers)
+        private static INetworkRepository StubProgrammerRepository(params IProgrammer[] programmers)
         {
-            var programmerRepository = Substitute.For<IGetNetwork>();
+            var programmerRepository = Substitute.For<INetworkRepository>();
             foreach (var programmer in programmers)
                 programmerRepository.GetById(programmer.GetId()).Returns(programmer);
             programmerRepository.GetAll().Returns(programmers);
             return programmerRepository;
         }
 
-        private static void AssertDegreesOfSeparationBetweenAAndB(IGetNetwork getNetwork, int expected)
+        private static void AssertDegreesOfSeparationBetweenAAndB(INetworkRepository networkRepository, int expected)
         {
-            var degrees = new SeparationService(getNetwork).GetDegreesBetween(ProgrammerAId, ProgrammerBId);
-            var degreesWithParametersSwapped = new SeparationService(getNetwork).GetDegreesBetween(ProgrammerBId, ProgrammerAId);
+            var degrees = new SeparationService(networkRepository).GetDegreesBetween(ProgrammerAId, ProgrammerBId);
+            var degreesWithParametersSwapped = new SeparationService(networkRepository).GetDegreesBetween(ProgrammerBId, ProgrammerAId);
 
             Assert.That(degrees, Is.EqualTo(expected));
             Assert.That(degrees, Is.EqualTo(degreesWithParametersSwapped));

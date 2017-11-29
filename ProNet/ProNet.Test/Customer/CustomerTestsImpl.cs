@@ -10,11 +10,11 @@ namespace ProNet.Test.Customer
         {
             // load your implementation here
             var fileService = new FileService();
-            var programmerRepository = new GetNetwork(fileService, filename);
-            var rankService = new RankService(programmerRepository);
-            var skillsService = new SkillsService(programmerRepository);
-            var separationService = new SeparationService(programmerRepository);
-            var recommendationService = new RecommendationService(programmerRepository);
+            var networkService = new NetworkRepository(fileService, filename);
+            var rankService = new RankService(networkService);
+            var skillsService = new SkillsService(networkService);
+            var separationService = new SeparationService(networkService);
+            var recommendationService = new RecommendationService(networkService);
 
             return new ProNet(rankService, skillsService, separationService, recommendationService);
         }

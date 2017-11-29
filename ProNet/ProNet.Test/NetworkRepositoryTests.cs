@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace ProNet.Test
 {
     [TestFixture]
-    public class GetNetworkTests
+    public class NetworkRepositoryTests
     {
         [Test]
         public void Throws_Argument_Exception_when_id_not_found()
@@ -22,7 +22,7 @@ namespace ProNet.Test
                                         </Programmer>
                                       </Network>";
             fileService.GetContents("file").Returns(new MemoryStream(Encoding.ASCII.GetBytes(contents)));
-            Assert.Throws<ArgumentException>(() => new GetNetwork(fileService, "file").GetById("invalid"));
+            Assert.Throws<ArgumentException>(() => new NetworkRepository(fileService, "file").GetById("invalid"));
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace ProNet.Test
             var fileService = Substitute.For<IFileService>();
             const string contents = "invalid network";
             fileService.GetContents("file").Returns(new MemoryStream(Encoding.ASCII.GetBytes(contents)));
-            Assert.Throws<ArgumentException>(() => new GetNetwork(fileService, "file").GetAll());
+            Assert.Throws<ArgumentException>(() => new NetworkRepository(fileService, "file").GetAll());
         }
     }
 }

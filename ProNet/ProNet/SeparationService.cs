@@ -5,13 +5,13 @@ namespace ProNet
 {
     public class SeparationService : ISeparationService
     {
-        private readonly IGetNetwork _programmers;
+        private readonly INetworkRepository _programmers;
         private readonly List<string> _visited;
         private readonly Queue<Node> _queue;
 
-        public SeparationService(IGetNetwork getNetwork)
+        public SeparationService(INetworkRepository networkRepository)
         {
-            _programmers = getNetwork;
+            _programmers = networkRepository;
             _visited = new List<string>();
             _queue = new Queue<Node>();
         }

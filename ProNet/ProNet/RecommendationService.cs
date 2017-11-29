@@ -4,9 +4,9 @@ namespace ProNet
 {
     public class RecommendationService : IRecommendationService
     {
-        private readonly GetNetwork _programmerRepository;
+        private readonly NetworkRepository _programmerRepository;
 
-        public RecommendationService(GetNetwork programmerRepository)
+        public RecommendationService(NetworkRepository programmerRepository)
         {
             _programmerRepository = programmerRepository;
         }

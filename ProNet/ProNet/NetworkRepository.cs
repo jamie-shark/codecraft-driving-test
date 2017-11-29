@@ -5,12 +5,12 @@ using System.Xml.Serialization;
 
 namespace ProNet
 {
-    public class GetNetwork : IGetNetwork
+    public class NetworkRepository : INetworkRepository
     {
         private readonly IFileService _fileService;
         private readonly string _networkFilePath;
 
-        public GetNetwork(IFileService fileService, string networkFilePath)
+        public NetworkRepository(IFileService fileService, string networkFilePath)
         {
             _fileService = fileService;
             _networkFilePath = networkFilePath;
