@@ -5,12 +5,14 @@
         private readonly IRankService _rankService;
         private readonly ISkillsService _skillsService;
         private readonly ISeparationService _separationService;
+        private readonly IRecommendationService _recommendationService;
 
-        public ProNet(IRankService rankService, ISkillsService skillsService, ISeparationService separationService)
+        public ProNet(IRankService rankService, ISkillsService skillsService, ISeparationService separationService, IRecommendationService recommendationService)
         {
             _rankService = rankService;
             _skillsService = skillsService;
             _separationService = separationService;
+            _recommendationService = recommendationService;
         }
 
         public string[] Skills(string programmer)
@@ -20,7 +22,7 @@
 
         public string[] Recommendations(string programmer)
         {
-            return new string[]{};
+            return _recommendationService.GetRecommendations(programmer) as string[];
         }
 
         public double Rank(string programmer)

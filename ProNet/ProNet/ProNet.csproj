@@ -48,11 +48,13 @@
     <Compile Include="IGetNetwork.cs" />
     <Compile Include="IProNet.cs" />
     <Compile Include="IRecommend.cs" />
+    <Compile Include="IRecommendationService.cs" />
     <Compile Include="IRecommended.cs" />
     <Compile Include="ISeparationService.cs" />
     <Compile Include="ISkill.cs" />
     <Compile Include="ISkillsService.cs" />
     <Compile Include="Programmer.cs" />
+    <Compile Include="RecommendationService.cs" />
     <Compile Include="SeparationService.cs" />
     <Compile Include="SkillsService.cs" />
     <Compile Include="XmlNetworkParser.cs" />
