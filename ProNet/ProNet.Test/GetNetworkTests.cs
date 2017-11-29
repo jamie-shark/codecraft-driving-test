@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace ProNet.Test
 {
     [TestFixture]
-    public class XmlProgrammerRepositoryTests
+    public class GetNetworkTests
     {
         [Test]
         public void Throws_Argument_Exception_when_id_not_found()
