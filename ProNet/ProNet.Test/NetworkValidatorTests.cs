@@ -30,5 +30,11 @@ namespace ProNet.Test
         {
             _network.Programmer = new[] { new NetworkProgrammer { name = null } };
         }
+
+        [Test]
+        public void Throws_Argument_Exception_when_network_has_programmer_with_no_list_of_recommendations()
+        {
+            _network.Programmer = new[] { new NetworkProgrammer { name = "some", Recommendations = null } };
+        }
     }
 }
