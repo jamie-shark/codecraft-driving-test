@@ -19,7 +19,13 @@ namespace ProNet
         public IEnumerable<IProgrammer> GetAll()
         {
             Network network;
+            TryGetNetwork(out network);
 
+            return network?.Programmer.Select(p => new Programmer(p.name, p.Recommendations, p.Skills));
+        }
+
+        private void TryGetNetwork(out Network network)
+        {
             try
             {
                 var serilaizer = new XmlSerializer(typeof(Network));
@@ -29,8 +35,6 @@ namespace ProNet
             {
                 throw new ArgumentException($"File {_networkFilePath} is not a valid ProNet data file");
             }
-
-            return network?.Programmer.Select(p => new Programmer(p.name, p.Recommendations, p.Skills));
         }
 
         public IProgrammer GetById(string id)
