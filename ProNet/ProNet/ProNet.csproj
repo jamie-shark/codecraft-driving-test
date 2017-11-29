@@ -59,6 +59,7 @@
     <Compile Include="RecommendationService.cs" />
     <Compile Include="SeparationService.cs" />
     <Compile Include="SkillsService.cs" />
+    <Compile Include="TeamStrengthService.cs" />
     <Compile Include="XmlNetworkParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RankService.cs" />
