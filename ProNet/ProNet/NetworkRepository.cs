@@ -23,7 +23,14 @@ namespace ProNet
             Network network;
             TryGetNetwork(out network);
 
-            _networkValidator.Validate(network);
+            try
+            {
+                _networkValidator.Validate(network);
+            }
+            catch (ArgumentException e)
+            {
+                throw new ArgumentException($"File {_networkFilePath} is not a valid ProNet data file");
+            }
 
             return network.Programmer.Select(p => new Programmer(p.name, p.Recommendations, p.Skills));
         }
@@ -33,9 +40,9 @@ namespace ProNet
             try
             {
                 var serilaizer = new XmlSerializer(typeof(Network));
-                network = (Network) serilaizer.Deserialize(_fileService.GetContents(_networkFilePath));
+                network = serilaizer.Deserialize(_fileService.GetContents(_networkFilePath)) as Network;
             }
-            catch (Exception e) when (e is InvalidOperationException || e is InvalidCastException)
+            catch (InvalidOperationException e)
             {
                 throw new ArgumentException($"File {_networkFilePath} is not a valid ProNet data file");
             }
