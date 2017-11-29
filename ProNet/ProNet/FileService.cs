@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace ProNet
 {
@@ -6,7 +7,14 @@ namespace ProNet
     {
         public Stream GetContents(string filePath)
         {
-            return new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            try
+            {
+                return new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            }
+            catch (FileNotFoundException e)
+            {
+                throw new ArgumentException("File not found");
+            }
         }
     }
 }

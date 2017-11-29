@@ -46,6 +46,10 @@ namespace ProNet
             {
                 throw new ArgumentException($"File {_networkFilePath} is not a valid ProNet data file");
             }
+            catch (ArgumentException e)
+            {
+                throw new ArgumentException($"File {_networkFilePath} was not found");
+            }
         }
 
         public IProgrammer GetById(string id)
