@@ -17,7 +17,7 @@
 
         public string[] Skills(string programmer)
         {
-            return (string[]) _skillsService.GetSkills(programmer);
+            return _skillsService.GetSkills(programmer) as string[];
         }
 
         public string[] Recommendations(string programmer)
