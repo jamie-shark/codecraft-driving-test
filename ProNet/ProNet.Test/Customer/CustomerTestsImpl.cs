@@ -10,7 +10,8 @@ namespace ProNet.Test.Customer
         {
             // load your implementation here
             var fileService = new FileService();
-            var networkService = new NetworkRepository(fileService, filename);
+            var networkValidator = new NetworkValidator();
+            var networkService = new NetworkRepository(fileService, filename, networkValidator);
             var rankService = new RankService(networkService);
             var skillsService = new SkillsService(networkService);
             var separationService = new SeparationService(networkService);

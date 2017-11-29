@@ -43,6 +43,7 @@
     <Compile Include="FileService.cs" />
     <Compile Include="IFileService.cs" />
     <Compile Include="IIdentifiable.cs" />
+    <Compile Include="INetworkValidator.cs" />
     <Compile Include="IRank.cs" />
     <Compile Include="IRankService.cs" />
     <Compile Include="INetworkRepository.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="ISeparationService.cs" />
     <Compile Include="ISkill.cs" />
     <Compile Include="ISkillsService.cs" />
+    <Compile Include="NetworkValidator.cs" />
     <Compile Include="Programmer.cs" />
     <Compile Include="RecommendationService.cs" />
     <Compile Include="SeparationService.cs" />

@@ -21,8 +21,9 @@ namespace ProNet.Test
                                           </Skills>
                                         </Programmer>
                                       </Network>";
+            var networkValidator = Substitute.For<INetworkValidator>();
             fileService.GetContents("file").Returns(new MemoryStream(Encoding.ASCII.GetBytes(contents)));
-            Assert.Throws<ArgumentException>(() => new NetworkRepository(fileService, "file").GetById("invalid"));
+            Assert.Throws<ArgumentException>(() => new NetworkRepository(fileService, "file", networkValidator).GetById("invalid"));
         }
 
         [Test]
@@ -30,8 +31,9 @@ namespace ProNet.Test
         {
             var fileService = Substitute.For<IFileService>();
             const string contents = "invalid network";
+            var networkValidator = Substitute.For<INetworkValidator>();
             fileService.GetContents("file").Returns(new MemoryStream(Encoding.ASCII.GetBytes(contents)));
-            Assert.Throws<ArgumentException>(() => new NetworkRepository(fileService, "file").GetAll());
+            Assert.Throws<ArgumentException>(() => new NetworkRepository(fileService, "file", networkValidator).GetAll());
         }
     }
 }

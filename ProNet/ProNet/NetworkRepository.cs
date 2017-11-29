@@ -9,11 +9,13 @@ namespace ProNet
     {
         private readonly IFileService _fileService;
         private readonly string _networkFilePath;
+        private readonly INetworkValidator _networkValidator;
 
-        public NetworkRepository(IFileService fileService, string networkFilePath)
+        public NetworkRepository(IFileService fileService, string networkFilePath, INetworkValidator networkValidator)
         {
             _fileService = fileService;
             _networkFilePath = networkFilePath;
+            _networkValidator = networkValidator;
         }
 
         public IEnumerable<IProgrammer> GetAll()
@@ -21,7 +23,9 @@ namespace ProNet
             Network network;
             TryGetNetwork(out network);
 
-            return network?.Programmer.Select(p => new Programmer(p.name, p.Recommendations, p.Skills));
+            _networkValidator.Validate(network);
+
+            return network.Programmer.Select(p => new Programmer(p.name, p.Recommendations, p.Skills));
         }
 
         private void TryGetNetwork(out Network network)

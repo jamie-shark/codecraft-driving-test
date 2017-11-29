@@ -51,6 +51,7 @@
     <Compile Include="Customer\AbstractCustomerTests.cs" />
     <Compile Include="Customer\ProNet.cs" />
     <Compile Include="NetworkRepositoryTests.cs" />
+    <Compile Include="NetworkValidatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RankServiceTests.cs" />
     <Compile Include="SeparationServiceTests.cs" />
