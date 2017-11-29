@@ -13,5 +13,14 @@ namespace ProNet.Test
             var strength = new TeamStrengthService().GetStrength(language, team);
             Assert.That(strength, Is.EqualTo(0));
         }
+
+        [Test]
+        public void Strength_of_leader_only_team_is_zero()
+        {
+            var language = "";
+            var team = new [] { "leader" };
+            var strength = new TeamStrengthService().GetStrength(language, team);
+            Assert.That(strength, Is.EqualTo(0));
+        }
     }
 }
