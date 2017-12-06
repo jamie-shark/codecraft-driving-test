@@ -26,7 +26,10 @@ namespace ProNet
 
         public IEnumerable<string> FindStrongestTeam(string skill, int size)
         {
-            throw new ArgumentException("Team size must be greater than zero");
+            if (size == 0)
+                throw new ArgumentException("Team size must be greater than zero");
+
+            return new string[size].AsEnumerable();
         }
 
         private double Strength(string skill, IEnumerable<string> team)

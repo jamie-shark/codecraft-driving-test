@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -85,6 +86,14 @@ namespace ProNet.Test
             _rankService.GetRank("member").Returns(0.6d);
             _expectedStrength = 0.12d;
             AssertTeamStrength();
+        }
+
+        [TestCase(1)]
+        [TestCase(5)]
+        public void Strongest_team_is_of_specified_size(int expected)
+        {
+            var team = _teamService.FindStrongestTeam("", expected);
+            Assert.That(team.Count(), Is.EqualTo(expected));
         }
 
         [Test]
