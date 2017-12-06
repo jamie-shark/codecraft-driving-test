@@ -140,6 +140,36 @@ namespace ProNet.Test
         }
 
         [Test]
+        public void Strongest_team_contains_connected_programmers_over_programmers_with_no_connections()
+        {
+            const string leader = "leader";
+            _rankService.GetRank(leader).Returns(0);
+            _skillsService.GetSkillIndex(leader, "skills").Returns(1);
+
+            const string connected = "connected";
+            _rankService.GetRank(connected).Returns(0);
+            _skillsService.GetSkillIndex(connected, "skill").Returns(2);
+
+            const string notConnected = "not connected";
+            _rankService.GetRank(notConnected).Returns(0);
+            _skillsService.GetSkillIndex(notConnected, "skill").Returns(2);
+
+            _separationService.GetDegreesBetween(leader, connected).Returns(1);
+            _separationService.GetDegreesBetween(leader, notConnected).Returns(0);
+
+            _networkRepository.GetAll().Returns(new[]
+            {
+                new Programmer(leader, null, null),
+                new Programmer(connected, null, null),
+                new Programmer(notConnected, null, null)
+            });
+
+            var team = _teamService.FindStrongestTeam("skill", 2);
+
+            Assert.That(team.All(programmer => programmer != notConnected), Is.True);
+        }
+
+        [Test]
         public void Strongest_team_must_have_at_least_one_member()
         {
             Assert.Throws<ArgumentException>(() => _teamService.FindStrongestTeam("", 0));

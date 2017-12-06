@@ -50,6 +50,7 @@ namespace ProNet
                 .ThenByDescending(programmer => programmer.Rank)
                 .Select(programmer => programmer.Id)
                 .Take(size);
+            //TODO: work out by calling GetStrength on combinations of connected teams from lowest skillIndex/ highest pageRank on subNetworks at least the size of the required team.
         }
 
         private double Strength(string skill, IEnumerable<string> team)
