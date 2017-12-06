@@ -68,5 +68,18 @@ namespace ProNet.Test
             _rankService.GetRank(Arg.Any<string>()).Returns(averageRank);
             _expectedStrength = averageRank;
         }
+
+        [Test]
+        public void Strength_of_two_member_team_is_expected()
+        {
+            _team = new List<string>{ "leader", "member" };
+            _skill = "skill";
+            _separationService.GetDegreesBetween("leader", "member").Returns(4);
+            _skillsService.GetSkillIndex("leader", "skill").Returns(3);
+            _skillsService.GetSkillIndex("member", "skill").Returns(2);
+            _rankService.GetRank("leader").Returns(0.5d);
+            _rankService.GetRank("member").Returns(0.6d);
+            _expectedStrength = 0.12d;
+        }
     }
 }

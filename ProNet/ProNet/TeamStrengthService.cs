@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ProNet
@@ -16,11 +17,27 @@ namespace ProNet
             _rankService = rankService;
         }
 
-        public double GetStrength(string language, IEnumerable<string> team)
+        public double GetStrength(string skill, IEnumerable<string> team)
         {
             return team.Any()
-                ? team.Average(member => _rankService.GetRank(member))
+                ? Strength(skill, team)
                 : 0d;
+        }
+
+        private double Strength(string skill, IEnumerable<string> team)
+        {
+            var leader = team.First();
+            var strength = (RankSkillIndex(leader, skill)
+                            + team.Skip(1).Sum(member =>
+                                RankSkillIndex(member, skill) / _separationService.GetDegreesBetween(leader, member))) / team.Count();
+            return double.IsNaN(strength)
+                ? 0d
+                : strength;
+        }
+
+        private double RankSkillIndex(string teamMember, string skill)
+        {
+            return _rankService.GetRank(teamMember) / _skillService.GetSkillIndex(teamMember, skill);
         }
     }
 }
