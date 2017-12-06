@@ -28,8 +28,7 @@ namespace ProNet.Test
             _team = new List<string> { "leader", "a", "b" };
         }
 
-        [TearDown]
-        public void TearDown()
+        public void AssertTeamStrength()
         {
             var strength = _teamService.GetStrength(_skill, _team);
             Assert.That(strength, Is.EqualTo(_expectedStrength).Within(0.01d));
@@ -41,6 +40,7 @@ namespace ProNet.Test
         {
             _team = team;
             _expectedStrength = expected;
+            AssertTeamStrength();
         }
 
         [Test]
@@ -48,6 +48,7 @@ namespace ProNet.Test
         {
             _separationService.GetDegreesBetween(Arg.Any<string>(), Arg.Any<string>()).Returns(0);
             _expectedStrength = 0;
+            AssertTeamStrength();
         }
 
         [Test]
@@ -58,6 +59,7 @@ namespace ProNet.Test
             _skillsService.GetSkills("a").Returns(new[] { "NOT skill" });
             _skillsService.GetSkills("b").Returns(new[] { "skill" });
             _expectedStrength = 0;
+            AssertTeamStrength();
         }
 
         [TestCase(1)]
@@ -68,6 +70,7 @@ namespace ProNet.Test
             _separationService.GetDegreesBetween(Arg.Any<string>(), Arg.Any<string>()).Returns(1);
             _rankService.GetRank(Arg.Any<string>()).Returns(averageRank);
             _expectedStrength = averageRank;
+            AssertTeamStrength();
         }
 
         [Test]
@@ -81,6 +84,13 @@ namespace ProNet.Test
             _rankService.GetRank("leader").Returns(0.5d);
             _rankService.GetRank("member").Returns(0.6d);
             _expectedStrength = 0.12d;
+            AssertTeamStrength();
+        }
+
+        [Test]
+        public void Strongest_team_must_have_at_least_one_member()
+        {
+            Assert.Throws<ArgumentException>(() => _teamService.FindStrongestTeam("", 0));
         }
     }
 }

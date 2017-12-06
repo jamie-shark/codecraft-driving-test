@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ProNet
@@ -21,6 +22,11 @@ namespace ProNet
             return team.Any()
                 ? Strength(skill, team)
                 : 0d;
+        }
+
+        public IEnumerable<string> FindStrongestTeam(string skill, int size)
+        {
+            throw new ArgumentException("Team size must be greater than zero");
         }
 
         private double Strength(string skill, IEnumerable<string> team)
