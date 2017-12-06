@@ -44,10 +44,12 @@ namespace ProNet
                     programmer.Id,
                     programmer.SkillIndex,
                     Rank = _rankService.GetRank(programmer.Id)
-                })
-                .OrderByDescending(programmer => programmer.Rank);
+                });
 
-            return ranks.Select(programmer => programmer.Id).Take(size);
+            return ranks.OrderBy(programmer => programmer.SkillIndex)
+                .ThenByDescending(programmer => programmer.Rank)
+                .Select(programmer => programmer.Id)
+                .Take(size);
         }
 
         private double Strength(string skill, IEnumerable<string> team)

@@ -109,32 +109,34 @@ namespace ProNet.Test
         }
 
         [Test]
-        public void Strongest_team_leader_is_highest_page_rank_with_the_skill()
+        public void Strongest_team_leader_is_lowest_skill_index_then_highest_page_rank_with_the_skill()
         {
-            const string highestPageRankProgrammer = "highest page rank";
-            _rankService.GetRank(highestPageRankProgrammer).Returns(1);
-            _skillsService.GetSkillIndex(highestPageRankProgrammer, Arg.Any<string>()).Returns(2);
+            const string highestPageRank = "highest page rank, lowest skill index";
+            _rankService.GetRank(highestPageRank).Returns(10);
+            _skillsService.GetSkillIndex(highestPageRank, Arg.Any<string>()).Returns(3);
 
-            const string otherProgrammer = "other";
-            _rankService.GetRank(otherProgrammer).Returns(0);
-            _skillsService.GetSkillIndex(otherProgrammer, Arg.Any<string>()).Returns(2);
+            const string lowestSkillIndex = "lowest skill index, lowest page rank";
+            _rankService.GetRank(lowestSkillIndex).Returns(0);
+            _skillsService.GetSkillIndex(lowestSkillIndex, Arg.Any<string>()).Returns(1);
 
-            const string withoutTheSkillProgrammer = "other without skill";
-            _rankService.GetRank(withoutTheSkillProgrammer).Returns(2);
-            _skillsService.GetSkillIndex(withoutTheSkillProgrammer, Arg.Any<string>()).Returns(0);
+            const string withoutSkill = "without skill";
+            _rankService.GetRank(withoutSkill).Returns(20);
+            _skillsService.GetSkillIndex(withoutSkill, Arg.Any<string>()).Returns(0);
 
             _separationService.GetDegreesBetween(Arg.Any<string>(), Arg.Any<string>()).Returns(1);
 
             _networkRepository.GetAll().Returns(new[]
                 {
-                    new Programmer(highestPageRankProgrammer, null, null),
-                    new Programmer(otherProgrammer, null, null),
-                    new Programmer(withoutTheSkillProgrammer, null, null)
+                    new Programmer(highestPageRank, null, null),
+                    new Programmer(lowestSkillIndex, null, null),
+                    new Programmer(withoutSkill, null, null)
                 });
 
-            var team = _teamService.FindStrongestTeam("skill", 1);
+            var team = _teamService.FindStrongestTeam("skill", 3).ToList();
 
-            Assert.That(team.First(), Is.EqualTo(highestPageRankProgrammer));
+            Assert.That(team[0], Is.EqualTo(lowestSkillIndex));
+            Assert.That(team[1], Is.EqualTo(highestPageRank));
+            Assert.That(team.Count, Is.EqualTo(2));
         }
 
         [Test]
