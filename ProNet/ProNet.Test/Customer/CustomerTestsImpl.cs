@@ -10,12 +10,14 @@ namespace ProNet.Test.Customer
             // load your implementation here
             var fileService = new FileService();
             var networkValidator = new NetworkValidator();
+            //TODO: Rename to Repo
             var networkService = new NetworkRepository(fileService, filename, networkValidator);
             var rankService = new RankService(networkService);
             var skillsService = new SkillsService(networkService);
             var separationService = new SeparationService(networkService);
             var recommendationService = new RecommendationService(networkService);
-            var teamStrengthService = new TeamService(separationService, skillsService, rankService);
+
+            var teamStrengthService = new TeamService(networkService, separationService, skillsService, rankService);
 
             return new ProNet(rankService, skillsService, separationService, recommendationService, teamStrengthService);
         }

@@ -9,6 +9,7 @@ namespace ProNet.Test
     [TestFixture]
     public class TeamServiceTests
     {
+        private INetworkRepository _networkRepository;
         private ISeparationService _separationService;
         private ISkillsService _skillsService;
         private IRankService _rankService;
@@ -20,10 +21,12 @@ namespace ProNet.Test
         [SetUp]
         public void SetUp()
         {
+            _networkRepository = Substitute.For<INetworkRepository>();
             _separationService = Substitute.For<ISeparationService>();
             _skillsService = Substitute.For<ISkillsService>();
             _rankService = Substitute.For<IRankService>();
-            _teamService = new TeamService(_separationService, _skillsService, _rankService);
+
+            _teamService = new TeamService(_networkRepository, _separationService, _skillsService, _rankService);
 
             _skill = "";
             _team = new List<string> { "leader", "a", "b" };
@@ -89,11 +92,49 @@ namespace ProNet.Test
         }
 
         [TestCase(1)]
-        [TestCase(5)]
+        [TestCase(3)]
         public void Strongest_team_is_of_specified_size(int expected)
         {
+            _skillsService.GetSkillIndex(Arg.Any<string>(), Arg.Any<string>()).Returns(1);
+            _separationService.GetDegreesBetween(Arg.Any<string>(), Arg.Any<string>()).Returns(1);
+            _rankService.GetRank(Arg.Any<string>()).Returns(0);
+            _networkRepository.GetAll().Returns(new[]
+            {
+                new Programmer(null, null, null),
+                new Programmer(null, null, null),
+                new Programmer(null, null, null)
+            });
             var team = _teamService.FindStrongestTeam("", expected);
             Assert.That(team.Count(), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void Strongest_team_leader_is_highest_page_rank_with_the_skill()
+        {
+            const string highestPageRankProgrammer = "highest page rank";
+            _rankService.GetRank(highestPageRankProgrammer).Returns(1);
+            _skillsService.GetSkillIndex(highestPageRankProgrammer, Arg.Any<string>()).Returns(2);
+
+            const string otherProgrammer = "other";
+            _rankService.GetRank(otherProgrammer).Returns(0);
+            _skillsService.GetSkillIndex(otherProgrammer, Arg.Any<string>()).Returns(2);
+
+            const string withoutTheSkillProgrammer = "other without skill";
+            _rankService.GetRank(withoutTheSkillProgrammer).Returns(2);
+            _skillsService.GetSkillIndex(withoutTheSkillProgrammer, Arg.Any<string>()).Returns(0);
+
+            _separationService.GetDegreesBetween(Arg.Any<string>(), Arg.Any<string>()).Returns(1);
+
+            _networkRepository.GetAll().Returns(new[]
+                {
+                    new Programmer(highestPageRankProgrammer, null, null),
+                    new Programmer(otherProgrammer, null, null),
+                    new Programmer(withoutTheSkillProgrammer, null, null)
+                });
+
+            var team = _teamService.FindStrongestTeam("skill", 1);
+
+            Assert.That(team.First(), Is.EqualTo(highestPageRankProgrammer));
         }
 
         [Test]
