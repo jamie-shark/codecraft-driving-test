@@ -63,8 +63,7 @@ namespace ProNet.Test
         [TestCase(5)]
         public void Strength_of_team_with_one_for_skill_index_and_degrees_of_separation_is_average_of_page_ranks(int averageRank)
         {
-            _skill = "skill";
-            _skillsService.GetSkills(Arg.Any<string>()).Returns(new[] { "skill" });
+            _skillsService.GetSkillIndex(Arg.Any<string>(), Arg.Any<string>()).Returns(1);
             _separationService.GetDegreesBetween(Arg.Any<string>(), Arg.Any<string>()).Returns(1);
             _rankService.GetRank(Arg.Any<string>()).Returns(averageRank);
             _expectedStrength = averageRank;

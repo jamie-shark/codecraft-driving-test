@@ -12,11 +12,11 @@ namespace ProNet
     {
         private readonly string _id;
         private readonly IEnumerable<string> _recommendations;
-        private readonly string[] _skills;
+        private readonly IEnumerable<string> _skills;
 
         public double Rank { get; set; }
 
-        public Programmer(string id, IEnumerable<string> recommendations, string[] skills)
+        public Programmer(string id, IEnumerable<string> recommendations, IEnumerable<string> skills)
         {
             _id = id;
             _recommendations = recommendations;
