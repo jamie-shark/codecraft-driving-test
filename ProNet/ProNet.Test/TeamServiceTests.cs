@@ -1,16 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NSubstitute;
 using NUnit.Framework;
 
 namespace ProNet.Test
 {
     [TestFixture]
-    public class TeamStrengthServiceTests
+    public class TeamServiceTests
     {
         private ISeparationService _separationService;
         private ISkillsService _skillsService;
         private IRankService _rankService;
-        private TeamStrengthService _teamStrengthService;
+        private TeamService _teamService;
         private string _skill;
         private IEnumerable<string> _team;
         private double _expectedStrength;
@@ -21,7 +22,7 @@ namespace ProNet.Test
             _separationService = Substitute.For<ISeparationService>();
             _skillsService = Substitute.For<ISkillsService>();
             _rankService = Substitute.For<IRankService>();
-            _teamStrengthService = new TeamStrengthService(_separationService, _skillsService, _rankService);
+            _teamService = new TeamService(_separationService, _skillsService, _rankService);
 
             _skill = "";
             _team = new List<string> { "leader", "a", "b" };
@@ -30,7 +31,7 @@ namespace ProNet.Test
         [TearDown]
         public void TearDown()
         {
-            var strength = _teamStrengthService.GetStrength(_skill, _team);
+            var strength = _teamService.GetStrength(_skill, _team);
             Assert.That(strength, Is.EqualTo(_expectedStrength).Within(0.01d));
         }
 

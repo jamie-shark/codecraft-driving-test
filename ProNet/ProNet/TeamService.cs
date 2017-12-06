@@ -3,13 +3,13 @@ using System.Linq;
 
 namespace ProNet
 {
-    public class TeamStrengthService : ITeamStrengthService
+    public class TeamService : ITeamService
     {
         private readonly ISeparationService _separationService;
         private readonly ISkillsService _skillService;
         private readonly IRankService _rankService;
 
-        public TeamStrengthService(ISeparationService separationService, ISkillsService skillService, IRankService rankService)
+        public TeamService(ISeparationService separationService, ISkillsService skillService, IRankService rankService)
         {
             _separationService = separationService;
             _skillService = skillService;
