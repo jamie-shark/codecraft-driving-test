@@ -13,7 +13,7 @@ namespace ProNet.Test
         private TeamStrengthService _teamStrengthService;
         private string _skill;
         private IEnumerable<string> _team;
-        private decimal _expectedStrength;
+        private double _expectedStrength;
 
         [SetUp]
         public void SetUp()
@@ -31,12 +31,12 @@ namespace ProNet.Test
         public void TearDown()
         {
             var strength = _teamStrengthService.GetStrength(_skill, _team);
-            Assert.That(strength, Is.EqualTo(_expectedStrength));
+            Assert.That(strength, Is.EqualTo(_expectedStrength).Within(0.01d));
         }
 
         [TestCase(new string[] {}, 0)]
         [TestCase(new[] { "leader" }, 0)]
-        public void Strength_of_empty_team_is_zero(IEnumerable<string> team, decimal expected)
+        public void Strength_of_empty_team_is_zero(IEnumerable<string> team, double expected)
         {
             _team = team;
             _expectedStrength = expected;
