@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ProNet
 {
@@ -17,7 +18,9 @@ namespace ProNet
 
         public double GetStrength(string language, IEnumerable<string> team)
         {
-            return 0;
+            return team.Any()
+                ? team.Average(member => _rankService.GetRank(member))
+                : 0d;
         }
     }
 }

@@ -52,5 +52,20 @@ namespace ProNet.Test
 
             Assert.That(strength, Is.EqualTo(0));
         }
+
+        [TestCase(1)]
+        [TestCase(5)]
+        public void Strength_of_team_with_one_for_skill_index_and_degrees_of_separation_is_average_of_page_ranks(int averageRank)
+        {
+            var team = new List<string> { "leader", "a", "b" };
+
+            _skillsService.GetSkills(Arg.Any<string>()).Returns(new[] { "skill" });
+            _separationService.GetDegreesBetween(Arg.Any<string>(), Arg.Any<string>()).Returns(1);
+            _rankService.GetRank(Arg.Any<string>()).Returns(averageRank);
+
+            var strength = _teamStrengthService.GetStrength("skill", team);
+
+            Assert.That(strength, Is.EqualTo(averageRank));
+        }
     }
 }
