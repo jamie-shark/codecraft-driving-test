@@ -54,6 +54,7 @@
     <Compile Include="ISeparationService.cs" />
     <Compile Include="ISkill.cs" />
     <Compile Include="ISkillsService.cs" />
+    <Compile Include="ITeamStrengthService.cs" />
     <Compile Include="NetworkValidator.cs" />
     <Compile Include="Programmer.cs" />
     <Compile Include="RecommendationService.cs" />

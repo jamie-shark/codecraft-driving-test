@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace ProNet.Test.Customer
 {
@@ -16,8 +15,9 @@ namespace ProNet.Test.Customer
             var skillsService = new SkillsService(networkService);
             var separationService = new SeparationService(networkService);
             var recommendationService = new RecommendationService(networkService);
+            var teamStrengthService = new TeamStrengthService(separationService, skillsService, rankService);
 
-            return new ProNet(rankService, skillsService, separationService, recommendationService);
+            return new ProNet(rankService, skillsService, separationService, recommendationService, teamStrengthService);
         }
     }
 }

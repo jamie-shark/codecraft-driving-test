@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace ProNet
 {
-    public class TeamStrengthService
+    public class TeamStrengthService : ITeamStrengthService
     {
         private readonly ISeparationService _separationService;
         private readonly ISkillsService _skillService;
