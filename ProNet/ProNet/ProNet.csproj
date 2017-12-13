@@ -54,12 +54,14 @@
     <Compile Include="ISeparationService.cs" />
     <Compile Include="ISkill.cs" />
     <Compile Include="ISkillsService.cs" />
+    <Compile Include="IStrongestTeamService.cs" />
     <Compile Include="ITeamService.cs" />
     <Compile Include="NetworkValidator.cs" />
     <Compile Include="Programmer.cs" />
     <Compile Include="RecommendationService.cs" />
     <Compile Include="SeparationService.cs" />
     <Compile Include="SkillsService.cs" />
+    <Compile Include="StrongestTeamService.cs" />
     <Compile Include="TeamService.cs" />
     <Compile Include="XmlNetworkParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

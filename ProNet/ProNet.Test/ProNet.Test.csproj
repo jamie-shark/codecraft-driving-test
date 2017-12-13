@@ -57,6 +57,7 @@
     <Compile Include="RankServiceTests.cs" />
     <Compile Include="SeparationServiceTests.cs" />
     <Compile Include="SkillsServiceTests.cs" />
+    <Compile Include="StrongestTeamServiceTests.cs" />
     <Compile Include="TeamServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace ProNet
 {
     public class TeamService : ITeamService
     {
-        private readonly INetworkRepository _networkRepository;
         private readonly ISeparationService _separationService;
         private readonly ISkillsService _skillService;
         private readonly IRankService _rankService;
 
-        public TeamService(INetworkRepository networkRepository, ISeparationService separationService, ISkillsService skillService, IRankService rankService)
+        public TeamService(ISeparationService separationService, ISkillsService skillService, IRankService rankService)
         {
-            _networkRepository = networkRepository;
             _separationService = separationService;
             _skillService = skillService;
             _rankService = rankService;
@@ -24,33 +21,6 @@ namespace ProNet
             return team.Any()
                 ? Strength(skill, team)
                 : 0d;
-        }
-
-        public IEnumerable<string> FindStrongestTeam(string skill, int size)
-        {
-            if (size == 0)
-                throw new ArgumentException("Team size must be greater than zero");
-
-            var network = _networkRepository.GetAll();
-            var programmersWithSkill = network.Select(programmer => new
-                    {
-                        Id = programmer.GetId(),
-                        SkillIndex = _skillService.GetSkillIndex(programmer.GetId(), skill)
-                    })
-                .Where(programmer => programmer.SkillIndex > 0);
-
-            var ranks = programmersWithSkill.Select(programmer => new
-                {
-                    programmer.Id,
-                    programmer.SkillIndex,
-                    Rank = _rankService.GetRank(programmer.Id)
-                });
-
-            return ranks.OrderBy(programmer => programmer.SkillIndex)
-                .ThenByDescending(programmer => programmer.Rank)
-                .Select(programmer => programmer.Id)
-                .Take(size);
-            //TODO: work out by calling GetStrength on combinations of connected teams from lowest skillIndex/ highest pageRank on subNetworks at least the size of the required team.
         }
 
         private double Strength(string skill, IEnumerable<string> team)
