@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using ProNet.Util;
 
 namespace ProNet.Test.Customer
 {
@@ -16,10 +17,11 @@ namespace ProNet.Test.Customer
             var skillsService = new SkillsService(networkService);
             var separationService = new SeparationService(networkService);
             var recommendationService = new RecommendationService(networkService);
-
             var teamStrengthService = new TeamStrengthService(separationService, skillsService, rankService);
+            var permutationService = new PermutationService();
+            var strongestTeamService = new StrongestTeamService(networkService, teamStrengthService, permutationService);
 
-            return new ProNet(rankService, skillsService, separationService, recommendationService, teamStrengthService);
+            return new ProNet(rankService, skillsService, separationService, recommendationService, teamStrengthService, strongestTeamService);
         }
     }
 }

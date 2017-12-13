@@ -1,4 +1,7 @@
-﻿namespace ProNet.Test.Customer
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace ProNet.Test.Customer
 {
     public class ProNet : IProNet
     {
@@ -7,14 +10,16 @@
         private readonly ISeparationService _separationService;
         private readonly IRecommendationService _recommendationService;
         private readonly ITeamStrengthService _teamStrengthService;
+        private readonly IStrongestTeamService _strongestTeamService;
 
-        public ProNet(IRankService rankService, ISkillsService skillsService, ISeparationService separationService, IRecommendationService recommendationService, ITeamStrengthService teamStrengthService)
+        public ProNet(IRankService rankService, ISkillsService skillsService, ISeparationService separationService, IRecommendationService recommendationService, ITeamStrengthService teamStrengthService, IStrongestTeamService strongestTeamService)
         {
             _rankService = rankService;
             _skillsService = skillsService;
             _separationService = separationService;
             _recommendationService = recommendationService;
             _teamStrengthService = teamStrengthService;
+            _strongestTeamService = strongestTeamService;
         }
 
         public string[] Skills(string programmer)
@@ -44,7 +49,7 @@
 
         public string[] FindStrongestTeam(string language, int teamSize)
         {
-            return new string[]{};
+            return _strongestTeamService.FindStrongestTeam(language, teamSize).ToArray();
         }
     }
 }
