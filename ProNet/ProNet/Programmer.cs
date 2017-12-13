@@ -42,5 +42,10 @@ namespace ProNet
         {
             return _skills;
         }
+
+        public bool HasSkill(string skill)
+        {
+            return _skills.Contains(skill);
+        }
     }
 }

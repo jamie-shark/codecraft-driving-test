@@ -5,5 +5,6 @@ namespace ProNet
     public interface ISkill
     {
         IEnumerable<string> GetSkills();
+        bool HasSkill(string skill);
     }
 }
