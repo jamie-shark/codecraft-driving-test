@@ -58,7 +58,7 @@
     <Compile Include="SeparationServiceTests.cs" />
     <Compile Include="SkillsServiceTests.cs" />
     <Compile Include="StrongestTeamServiceTests.cs" />
-    <Compile Include="TeamServiceTests.cs" />
+    <Compile Include="TeamStrengthServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProNet\ProNet.csproj">

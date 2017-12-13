@@ -5,13 +5,12 @@ using NUnit.Framework;
 namespace ProNet.Test
 {
     [TestFixture]
-    public class TeamServiceTests
+    public class TeamStrengthServiceTests
     {
-        private INetworkRepository _networkRepository;
         private ISeparationService _separationService;
         private ISkillsService _skillsService;
         private IRankService _rankService;
-        private ITeamService _teamService;
+        private ITeamStrengthService _teamStrengthService;
         private string _skill;
         private IEnumerable<string> _team;
         private double _expectedStrength;
@@ -19,12 +18,11 @@ namespace ProNet.Test
         [SetUp]
         public void SetUp()
         {
-            _networkRepository = Substitute.For<INetworkRepository>();
             _separationService = Substitute.For<ISeparationService>();
             _skillsService = Substitute.For<ISkillsService>();
             _rankService = Substitute.For<IRankService>();
 
-            _teamService = new TeamService(_separationService, _skillsService, _rankService);
+            _teamStrengthService = new TeamStrengthService(_separationService, _skillsService, _rankService);
 
             _skill = "";
             _team = new List<string> { "leader", "a", "b" };
@@ -32,7 +30,7 @@ namespace ProNet.Test
 
         public void AssertTeamStrength()
         {
-            var strength = _teamService.GetStrength(_skill, _team);
+            var strength = _teamStrengthService.GetStrength(_skill, _team);
             Assert.That(strength, Is.EqualTo(_expectedStrength).Within(0.01d));
         }
 
@@ -42,6 +40,7 @@ namespace ProNet.Test
         {
             _team = team;
             _expectedStrength = expected;
+
             AssertTeamStrength();
         }
 
@@ -50,6 +49,7 @@ namespace ProNet.Test
         {
             _separationService.GetDegreesBetween(Arg.Any<string>(), Arg.Any<string>()).Returns(0);
             _expectedStrength = 0;
+
             AssertTeamStrength();
         }
 
@@ -61,6 +61,7 @@ namespace ProNet.Test
             _skillsService.GetSkills("a").Returns(new[] { "NOT skill" });
             _skillsService.GetSkills("b").Returns(new[] { "skill" });
             _expectedStrength = 0;
+
             AssertTeamStrength();
         }
 
@@ -72,6 +73,7 @@ namespace ProNet.Test
             _separationService.GetDegreesBetween(Arg.Any<string>(), Arg.Any<string>()).Returns(1);
             _rankService.GetRank(Arg.Any<string>()).Returns(averageRank);
             _expectedStrength = averageRank;
+
             AssertTeamStrength();
         }
 
@@ -86,6 +88,7 @@ namespace ProNet.Test
             _rankService.GetRank("leader").Returns(0.5d);
             _rankService.GetRank("member").Returns(0.6d);
             _expectedStrength = 0.12d;
+
             AssertTeamStrength();
         }
     }

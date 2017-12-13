@@ -19,7 +19,7 @@ namespace ProNet.Test
                 new Programmer(null, null, null),
                 new Programmer(null, null, null)
             });
-            var teamService = Substitute.For<ITeamService>();
+            var teamService = Substitute.For<ITeamStrengthService>();
             var team = new StrongestTeamService(networkRepository, teamService).FindStrongestTeam("", expected);
             Assert.That(team.Count(), Is.EqualTo(expected));
         }
@@ -27,7 +27,7 @@ namespace ProNet.Test
         [Test]
         public void Strongest_team_must_have_at_least_one_member()
         {
-            Assert.Throws<ArgumentException>(() => new StrongestTeamService(Substitute.For<INetworkRepository>(), Substitute.For<ITeamService>()).FindStrongestTeam("valid skill", 0));
+            Assert.Throws<ArgumentException>(() => new StrongestTeamService(Substitute.For<INetworkRepository>(), Substitute.For<ITeamStrengthService>()).FindStrongestTeam("valid skill", 0));
         }
     }
 }

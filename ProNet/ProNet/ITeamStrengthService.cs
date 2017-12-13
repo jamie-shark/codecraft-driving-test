@@ -2,7 +2,7 @@
 
 namespace ProNet
 {
-    public interface ITeamService
+    public interface ITeamStrengthService
     {
         double GetStrength(string skill, IEnumerable<string> team);
     }

@@ -7,12 +7,12 @@ namespace ProNet
     public class StrongestTeamService : IStrongestTeamService
     {
         private readonly INetworkRepository _networkRepository;
-        private readonly ITeamService _teamService;
+        private readonly ITeamStrengthService _teamStrengthService;
 
-        public StrongestTeamService(INetworkRepository networkRepository, ITeamService teamService)
+        public StrongestTeamService(INetworkRepository networkRepository, ITeamStrengthService teamStrengthService)
         {
             _networkRepository = networkRepository;
-            _teamService = teamService;
+            _teamStrengthService = teamStrengthService;
         }
 
         public IEnumerable<string> FindStrongestTeam(string skill, int size)
