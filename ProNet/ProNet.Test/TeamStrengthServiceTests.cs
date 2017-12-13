@@ -91,5 +91,19 @@ namespace ProNet.Test
 
             AssertTeamStrength();
         }
+
+        [Test]
+        public void Strength_of_single_member_team_is_rank_over_skill_index()
+        {
+            const string programmerId = "only member";
+            const string skill = "skill";
+
+            _rankService.GetRank(programmerId).Returns(2);
+            _skillsService.GetSkillIndex(programmerId, skill).Returns(3);
+
+            var strength = new TeamStrengthService(_separationService, _skillsService, _rankService).GetStrength(skill, new List<string> { programmerId });
+
+            Assert.That(strength, Is.EqualTo(2d / 3d));
+        }
     }
 }
