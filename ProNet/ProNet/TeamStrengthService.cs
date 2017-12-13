@@ -25,23 +25,18 @@ namespace ProNet
 
         public double GetIndividualStrength(string skill, string individual)
         {
-            return RankSkillIndex(individual, skill);
+            return _rankService.GetRank(individual) / _skillService.GetSkillIndex(individual, skill);
         }
 
         private double Strength(string skill, IEnumerable<string> team)
         {
             var leader = team.First();
-            var strength = (RankSkillIndex(leader, skill)
+            var strength = (GetIndividualStrength(skill, leader)
                             + team.Skip(1).Sum(member =>
-                                RankSkillIndex(member, skill) / _separationService.GetDegreesBetween(leader, member))) / team.Count();
+                                GetIndividualStrength(skill, member) / _separationService.GetDegreesBetween(leader, member))) / team.Count();
             return double.IsNaN(strength)
                 ? 0d
                 : strength;
-        }
-
-        private double RankSkillIndex(string teamMember, string skill)
-        {
-            return _rankService.GetRank(teamMember) / _skillService.GetSkillIndex(teamMember, skill);
         }
     }
 }
