@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ProNet.Util;
 
 namespace ProNet
 {
@@ -8,11 +9,13 @@ namespace ProNet
     {
         private readonly INetworkRepository _networkRepository;
         private readonly ITeamStrengthService _teamStrengthService;
+        private readonly IPermutationService _permutationService;
 
-        public StrongestTeamService(INetworkRepository networkRepository, ITeamStrengthService teamStrengthService)
+        public StrongestTeamService(INetworkRepository networkRepository, ITeamStrengthService teamStrengthService, IPermutationService permutationService)
         {
             _networkRepository = networkRepository;
             _teamStrengthService = teamStrengthService;
+            _permutationService = permutationService;
         }
 
         public IEnumerable<string> FindStrongestTeam(string skill, int size)
@@ -25,21 +28,11 @@ namespace ProNet
                 .Where(programmer => programmer.HasSkill(skill))
                 .Select(programmer => programmer.GetId());
 
-            var possibleTeams = GetAllPermutations(validProgrammers, size);
+            var possibleTeams = _permutationService.GetPermutations(validProgrammers, size);
 
             return possibleTeams
                 .OrderByDescending(possibleTeam => _teamStrengthService.GetStrength(skill, possibleTeam))
                 .First();
-        }
-
-        private static IEnumerable<IEnumerable<string>> GetAllPermutations(IEnumerable<string> set, int size)
-        {
-            if (size == 1)
-                return set.Select(item => new List<string> {item}.AsEnumerable());
-
-            return set.SelectMany(item1 => set, (item1, item2) => new { item1, item2 })
-                .Where(group => group.item1 != group.item2)
-                .Select(group => new[] {group.item1, group.item2}.AsEnumerable());
         }
     }
 }
