@@ -30,7 +30,7 @@ namespace ProNet.Test
 
         public void AssertTeamStrength()
         {
-            var strength = _teamStrengthService.GetStrength(_skill, _team);
+            var strength = _teamStrengthService.GetTeamStrength(_skill, _team);
             Assert.That(strength, Is.EqualTo(_expectedStrength).Within(0.01d));
         }
 
@@ -102,7 +102,7 @@ namespace ProNet.Test
             _rankService.GetRank(programmerId).Returns(2);
             _skillsService.GetSkillIndex(programmerId, skill).Returns(3);
 
-            var strength = new TeamStrengthService(_separationService, _skillsService, _rankService).GetStrength(skill, new List<string> { programmerId });
+            var strength = new TeamStrengthService(_separationService, _skillsService, _rankService).GetTeamStrength(skill, new List<string> { programmerId });
 
             Assert.That(strength, Is.EqualTo(2d / 3d));
         }
@@ -117,7 +117,7 @@ namespace ProNet.Test
             var rankService = Substitute.For<IRankService>();
             rankService.GetRank(programmerId).Returns(2d);
 
-            var strength = new TeamStrengthService(null, skillService, rankService).GetMemberStrength(programmerId, skill);
+            var strength = new TeamStrengthService(null, skillService, rankService).GetIndividualStrength(programmerId, skill);
 
             const double expected = 2d / 3d;
             Assert.That(strength, Is.EqualTo(expected));

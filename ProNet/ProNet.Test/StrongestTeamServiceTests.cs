@@ -55,9 +55,9 @@ namespace ProNet.Test
             var team3 = new[] { programmerA, programmerC };
 
             var teamStrengthService = Substitute.For<ITeamStrengthService>();
-            teamStrengthService.GetStrength(skill, team1).Returns(0d);
-            teamStrengthService.GetStrength(skill, team2).Returns(1d);
-            teamStrengthService.GetStrength(skill, team3).Returns(2d);
+            teamStrengthService.GetTeamStrength(skill, team1).Returns(0d);
+            teamStrengthService.GetTeamStrength(skill, team2).Returns(1d);
+            teamStrengthService.GetTeamStrength(skill, team3).Returns(2d);
 
             var permutationService = Substitute.For<IPermutationService>();
             permutationService.GetPermutations(Arg.Any<IEnumerable<string>>(), 2).Returns(new[] { team1, team2, team3 });
@@ -86,9 +86,9 @@ namespace ProNet.Test
             var team1 = new[] { programmerA, programmerB, programmerC };
 
             var teamStrengthService = Substitute.For<ITeamStrengthService>();
-            teamStrengthService.GetMemberStrength(programmerA, skill).Returns(0);
-            teamStrengthService.GetMemberStrength(programmerB, skill).Returns(1);
-            teamStrengthService.GetMemberStrength(programmerC, skill).Returns(2);
+            teamStrengthService.GetIndividualStrength(programmerA, skill).Returns(0);
+            teamStrengthService.GetIndividualStrength(programmerB, skill).Returns(1);
+            teamStrengthService.GetIndividualStrength(programmerC, skill).Returns(2);
             var permutationService = Substitute.For<IPermutationService>();
             permutationService.GetPermutations(Arg.Any<IEnumerable<string>>(), 2).Returns(new[] { team1 });
 

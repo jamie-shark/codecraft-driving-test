@@ -44,7 +44,7 @@ namespace ProNet.Test.Customer
 
         public double TeamStrength(string language, string[] team)
         {
-            return _teamStrengthService.GetStrength(language, team);
+            return _teamStrengthService.GetTeamStrength(language, team);
         }
 
         public string[] FindStrongestTeam(string language, int teamSize)

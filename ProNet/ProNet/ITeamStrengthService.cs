@@ -4,7 +4,7 @@ namespace ProNet
 {
     public interface ITeamStrengthService
     {
-        double GetStrength(string skill, IEnumerable<string> team);
-        double GetMemberStrength(string programmerId, string skill);
+        double GetTeamStrength(string skill, IEnumerable<string> team);
+        double GetIndividualStrength(string programmerId, string skill);
     }
 }

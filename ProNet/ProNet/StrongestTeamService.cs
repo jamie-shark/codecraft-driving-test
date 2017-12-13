@@ -31,9 +31,9 @@ namespace ProNet
             var possibleTeams = _permutationService.GetPermutations(validProgrammers, size);
 
             return possibleTeams
-                .OrderByDescending(possibleTeam => _teamStrengthService.GetStrength(skill, possibleTeam))
+                .OrderByDescending(possibleTeam => _teamStrengthService.GetTeamStrength(skill, possibleTeam))
                 .First()
-                .OrderByDescending(teamMember => _teamStrengthService.GetMemberStrength(teamMember, skill));
+                .OrderByDescending(teamMember => _teamStrengthService.GetIndividualStrength(teamMember, skill));
         }
     }
 }

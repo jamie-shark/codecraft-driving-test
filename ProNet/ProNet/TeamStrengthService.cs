@@ -16,14 +16,14 @@ namespace ProNet
             _rankService = rankService;
         }
 
-        public double GetStrength(string skill, IEnumerable<string> team)
+        public double GetTeamStrength(string skill, IEnumerable<string> team)
         {
             return team.Any()
                 ? Strength(skill, team)
                 : 0d;
         }
 
-        public double GetMemberStrength(string programmerId, string skill)
+        public double GetIndividualStrength(string programmerId, string skill)
         {
             return RankSkillIndex(programmerId, skill);
         }
