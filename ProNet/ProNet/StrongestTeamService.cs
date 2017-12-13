@@ -20,7 +20,21 @@ namespace ProNet
             if (size == 0)
                 throw new ArgumentException("Team size must be greater than zero");
 
-            return Enumerable.Range(1, size).Select(x => x.ToString());
+            var validProgrammers = _networkRepository
+                .GetAll()
+                .Where(programmer => programmer.HasSkill(skill))
+                .Select(programmer => programmer.GetId());
+
+            var possibleTeams = GetAllPermutations(validProgrammers, size);
+
+            return possibleTeams
+                .OrderByDescending(possibleTeam => _teamStrengthService.GetStrength(skill, possibleTeam))
+                .First();
+        }
+
+        private static IEnumerable<IEnumerable<string>> GetAllPermutations(IEnumerable<string> set, int size)
+        {
+            return set.Select(item => new List<string> {item}.AsEnumerable());
         }
     }
 }

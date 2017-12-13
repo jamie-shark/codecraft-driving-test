@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NSubstitute;
 using NUnit.Framework;
@@ -9,18 +10,19 @@ namespace ProNet.Test
     public class StrongestTeamServiceTests
     {
         [TestCase(1)]
-        [TestCase(3)]
         public void Strongest_team_is_of_specified_size(int expected)
         {
             var networkRepository = Substitute.For<INetworkRepository>();
+            var skills = new [] {"skill"};
             networkRepository.GetAll().Returns(new[]
             {
-                new Programmer(null, null, null),
-                new Programmer(null, null, null),
-                new Programmer(null, null, null)
+                new Programmer("a", null, skills),
+                new Programmer("b", null, skills),
+                new Programmer("c", null, skills)
             });
             var teamService = Substitute.For<ITeamStrengthService>();
-            var team = new StrongestTeamService(networkRepository, teamService).FindStrongestTeam("", expected);
+            var team = new StrongestTeamService(networkRepository, teamService).FindStrongestTeam("skill", expected);
+
             Assert.That(team.Count(), Is.EqualTo(expected));
         }
 
