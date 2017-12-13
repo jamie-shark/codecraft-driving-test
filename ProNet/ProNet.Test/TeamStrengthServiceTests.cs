@@ -77,16 +77,17 @@ namespace ProNet.Test
             AssertTeamStrength();
         }
 
-        [Test]
-        public void Strength_of_two_member_team_is_expected()
+        [TestCase("memberA", "memberB")]
+        [TestCase("memberB", "memberA")]
+        public void Strength_is_the_same_regardless_of_leader(string leader, string member)
         {
-            _team = new List<string>{ "leader", "member" };
+            _team = new List<string> { leader, member };
             _skill = "skill";
-            _separationService.GetDegreesBetween("leader", "member").Returns(4);
-            _skillsService.GetSkillIndex("leader", "skill").Returns(3);
-            _skillsService.GetSkillIndex("member", "skill").Returns(2);
-            _rankService.GetRank("leader").Returns(0.5d);
-            _rankService.GetRank("member").Returns(0.6d);
+            _separationService.GetDegreesBetween(leader, member).Returns(4);
+            _skillsService.GetSkillIndex(leader, _skill).Returns(3);
+            _skillsService.GetSkillIndex(member, _skill).Returns(2);
+            _rankService.GetRank(leader).Returns(0.5d);
+            _rankService.GetRank(member).Returns(0.6d);
             _expectedStrength = 0.12d;
 
             AssertTeamStrength();
