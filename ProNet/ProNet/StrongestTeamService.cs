@@ -34,7 +34,12 @@ namespace ProNet
 
         private static IEnumerable<IEnumerable<string>> GetAllPermutations(IEnumerable<string> set, int size)
         {
-            return set.Select(item => new List<string> {item}.AsEnumerable());
+            if (size == 1)
+                return set.Select(item => new List<string> {item}.AsEnumerable());
+
+            return set.SelectMany(item1 => set, (item1, item2) => new { item1, item2 })
+                .Where(group => group.item1 != group.item2)
+                .Select(group => new[] {group.item1, group.item2}.AsEnumerable());
         }
     }
 }

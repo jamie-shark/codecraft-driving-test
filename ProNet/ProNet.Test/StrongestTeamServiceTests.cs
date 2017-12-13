@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using NSubstitute;
 using NUnit.Framework;
@@ -10,6 +9,7 @@ namespace ProNet.Test
     public class StrongestTeamServiceTests
     {
         [TestCase(1)]
+        [TestCase(2)]
         public void Strongest_team_is_of_specified_size(int expected)
         {
             var networkRepository = Substitute.For<INetworkRepository>();
