@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NSubstitute;
 using NUnit.Framework;
@@ -53,15 +54,15 @@ namespace ProNet.Test
             var team2 = new[] { programmerC, programmerB };
             var team3 = new[] { programmerA, programmerC };
 
-            var teamService = Substitute.For<ITeamStrengthService>();
-            teamService.GetStrength(skill, team1).Returns(0d);
-            teamService.GetStrength(skill, team2).Returns(1d);
-            teamService.GetStrength(skill, team3).Returns(2d);
+            var teamStrengthService = Substitute.For<ITeamStrengthService>();
+            teamStrengthService.GetStrength(skill, team1).Returns(0d);
+            teamStrengthService.GetStrength(skill, team2).Returns(1d);
+            teamStrengthService.GetStrength(skill, team3).Returns(2d);
 
             var permutationService = Substitute.For<IPermutationService>();
-            permutationService.GetPermutations(new [] {programmerA, programmerB, programmerC}, 2).Returns(new [] {team1, team2, team3});
+            permutationService.GetPermutations(Arg.Any<IEnumerable<string>>(), 2).Returns(new[] { team1, team2, team3 });
 
-            var strongestTeam = new StrongestTeamService(networkRepository, teamService, permutationService).FindStrongestTeam(skill, 2);
+            var strongestTeam = new StrongestTeamService(networkRepository, teamStrengthService, permutationService).FindStrongestTeam(skill, 2);
 
             Assert.That(strongestTeam, Is.EqualTo(team3));
         }
