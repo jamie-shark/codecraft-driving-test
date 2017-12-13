@@ -117,7 +117,7 @@ namespace ProNet.Test
             var rankService = Substitute.For<IRankService>();
             rankService.GetRank(programmerId).Returns(2d);
 
-            var strength = new TeamStrengthService(null, skillService, rankService).GetIndividualStrength(programmerId, skill);
+            var strength = new TeamStrengthService(null, skillService, rankService).GetIndividualStrength(skill, programmerId);
 
             const double expected = 2d / 3d;
             Assert.That(strength, Is.EqualTo(expected));

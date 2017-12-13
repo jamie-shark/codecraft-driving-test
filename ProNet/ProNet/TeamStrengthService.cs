@@ -23,9 +23,9 @@ namespace ProNet
                 : 0d;
         }
 
-        public double GetIndividualStrength(string programmerId, string skill)
+        public double GetIndividualStrength(string skill, string individual)
         {
-            return RankSkillIndex(programmerId, skill);
+            return RankSkillIndex(individual, skill);
         }
 
         private double Strength(string skill, IEnumerable<string> team)

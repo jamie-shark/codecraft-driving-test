@@ -86,9 +86,9 @@ namespace ProNet.Test
             var team1 = new[] { programmerA, programmerB, programmerC };
 
             var teamStrengthService = Substitute.For<ITeamStrengthService>();
-            teamStrengthService.GetIndividualStrength(programmerA, skill).Returns(0);
-            teamStrengthService.GetIndividualStrength(programmerB, skill).Returns(1);
-            teamStrengthService.GetIndividualStrength(programmerC, skill).Returns(2);
+            teamStrengthService.GetIndividualStrength(skill, programmerA).Returns(0);
+            teamStrengthService.GetIndividualStrength(skill, programmerB).Returns(1);
+            teamStrengthService.GetIndividualStrength(skill, programmerC).Returns(2);
             var permutationService = Substitute.For<IPermutationService>();
             permutationService.GetPermutations(Arg.Any<IEnumerable<string>>(), 2).Returns(new[] { team1 });
 

@@ -5,6 +5,6 @@ namespace ProNet
     public interface ITeamStrengthService
     {
         double GetTeamStrength(string skill, IEnumerable<string> team);
-        double GetIndividualStrength(string programmerId, string skill);
+        double GetIndividualStrength(string skill, string individual);
     }
 }
