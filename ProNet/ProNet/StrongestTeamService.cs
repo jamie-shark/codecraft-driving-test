@@ -32,7 +32,8 @@ namespace ProNet
 
             return possibleTeams
                 .OrderByDescending(possibleTeam => _teamStrengthService.GetStrength(skill, possibleTeam))
-                .First();
+                .First()
+                .OrderByDescending(teamMember => _teamStrengthService.GetMemberStrength(teamMember, skill));
         }
     }
 }

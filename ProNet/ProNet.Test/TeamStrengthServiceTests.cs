@@ -106,5 +106,21 @@ namespace ProNet.Test
 
             Assert.That(strength, Is.EqualTo(2d / 3d));
         }
+
+        [Test]
+        public void Strength_of_individual_is_rank_over_skill_index()
+        {
+            const string skill = "valid skill";
+            const string programmerId = "programmer id";
+            var skillService = Substitute.For<ISkillsService>();
+            skillService.GetSkillIndex(programmerId, skill).Returns(3);
+            var rankService = Substitute.For<IRankService>();
+            rankService.GetRank(programmerId).Returns(2d);
+
+            var strength = new TeamStrengthService(null, skillService, rankService).GetMemberStrength(programmerId, skill);
+
+            const double expected = 2d / 3d;
+            Assert.That(strength, Is.EqualTo(expected));
+        }
     }
 }

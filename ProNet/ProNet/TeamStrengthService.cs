@@ -23,6 +23,11 @@ namespace ProNet
                 : 0d;
         }
 
+        public double GetMemberStrength(string programmerId, string skill)
+        {
+            return RankSkillIndex(programmerId, skill);
+        }
+
         private double Strength(string skill, IEnumerable<string> team)
         {
             var leader = team.First();

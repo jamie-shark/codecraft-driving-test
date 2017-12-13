@@ -68,6 +68,36 @@ namespace ProNet.Test
         }
 
         [Test]
+        public void Leader_is_strongest_in_team()
+        {
+            const string skill = "valid skill";
+            const string programmerA = "a";
+            const string programmerB = "b";
+            const string programmerC = "c";
+
+            var networkRepository = Substitute.For<INetworkRepository>();
+            networkRepository.GetAll().Returns(new[]
+            {
+                new Programmer(programmerA, null, null),
+                new Programmer(programmerB, null, null),
+                new Programmer(programmerC, null, null)
+            });
+
+            var team1 = new[] { programmerA, programmerB, programmerC };
+
+            var teamStrengthService = Substitute.For<ITeamStrengthService>();
+            teamStrengthService.GetMemberStrength(programmerA, skill).Returns(0);
+            teamStrengthService.GetMemberStrength(programmerB, skill).Returns(1);
+            teamStrengthService.GetMemberStrength(programmerC, skill).Returns(2);
+            var permutationService = Substitute.For<IPermutationService>();
+            permutationService.GetPermutations(Arg.Any<IEnumerable<string>>(), 2).Returns(new[] { team1 });
+
+            var strongestTeam = new StrongestTeamService(networkRepository, teamStrengthService, permutationService).FindStrongestTeam(skill, 2);
+
+            Assert.That(strongestTeam.First(), Is.EqualTo(programmerC));
+        }
+
+        [Test]
         public void Strongest_team_must_have_at_least_one_member()
         {
             Assert.Throws<ArgumentException>(() =>
