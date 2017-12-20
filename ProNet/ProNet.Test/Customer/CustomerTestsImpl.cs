@@ -17,8 +17,9 @@ namespace ProNet.Test.Customer
             var separationService = new SeparationService(networkService);
             var recommendationService = new RecommendationService(networkService);
             var teamStrengthService = new TeamStrengthService(separationService, skillsService, rankService);
-            var permutationService = new PermutationService();
-            var strongestTeamService = new StrongestTeamService(networkService, teamStrengthService, permutationService);
+            //var permutationService = new PermutationService();
+            var permutationService = new CombinationService();
+            var strongestTeamService = new StrongestTeamService(networkService, teamStrengthService, permutationService, separationService);
 
             return new ProNet(rankService, skillsService, separationService, recommendationService, teamStrengthService, strongestTeamService);
         }

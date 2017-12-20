@@ -29,7 +29,7 @@ namespace ProNet.Test
             });
             var teamService = Substitute.For<ITeamStrengthService>();
 
-            var team = new StrongestTeamService(networkRepository, teamService, new PermutationService()).FindStrongestTeam("skill", expected);
+            var team = new StrongestTeamService(networkRepository, teamService, new PermutationService(), null).FindStrongestTeam("skill", expected);
 
             Assert.That(team.Count(), Is.EqualTo(expected));
         }
@@ -62,7 +62,7 @@ namespace ProNet.Test
             var permutationService = Substitute.For<IPermutationService>();
             permutationService.GetPermutations(Arg.Any<IEnumerable<string>>(), 2).Returns(new[] { team1, team2, team3 });
 
-            var strongestTeam = new StrongestTeamService(networkRepository, teamStrengthService, permutationService).FindStrongestTeam(skill, 2);
+            var strongestTeam = new StrongestTeamService(networkRepository, teamStrengthService, permutationService, null).FindStrongestTeam(skill, 2);
 
             Assert.That(strongestTeam, Is.EqualTo(team3));
         }
@@ -92,7 +92,7 @@ namespace ProNet.Test
             var permutationService = Substitute.For<IPermutationService>();
             permutationService.GetPermutations(Arg.Any<IEnumerable<string>>(), 2).Returns(new[] { team1 });
 
-            var strongestTeam = new StrongestTeamService(networkRepository, teamStrengthService, permutationService).FindStrongestTeam(skill, 2);
+            var strongestTeam = new StrongestTeamService(networkRepository, teamStrengthService, permutationService, null).FindStrongestTeam(skill, 2);
 
             Assert.That(strongestTeam.First(), Is.EqualTo(programmerC));
         }
@@ -101,7 +101,7 @@ namespace ProNet.Test
         public void Strongest_team_must_have_at_least_one_member()
         {
             Assert.Throws<ArgumentException>(() =>
-                new StrongestTeamService(Substitute.For<INetworkRepository>(), Substitute.For<ITeamStrengthService>(), Substitute.For<IPermutationService>())
+                new StrongestTeamService(Substitute.For<INetworkRepository>(), Substitute.For<ITeamStrengthService>(), Substitute.For<IPermutationService>(), null)
                     .FindStrongestTeam("valid skill", 0));
         }
     }

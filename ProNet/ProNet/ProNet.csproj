@@ -63,6 +63,7 @@
     <Compile Include="SkillsService.cs" />
     <Compile Include="StrongestTeamService.cs" />
     <Compile Include="TeamStrengthService.cs" />
+    <Compile Include="Util\CombinationService.cs" />
     <Compile Include="Util\IPermutationService.cs" />
     <Compile Include="Util\PermutationService.cs" />
     <Compile Include="XmlNetworkParser.cs" />
