@@ -31,8 +31,9 @@ namespace ProNet
         private double Strength(string skill, IEnumerable<string> team)
         {
             var leader = team.First();
+            var members = team.Skip(1);
             var strength = (GetIndividualStrength(skill, leader)
-                            + team.Skip(1).Sum(member =>
+                            + members.Sum(member =>
                                 GetIndividualStrength(skill, member) / _separationService.GetDegreesBetween(leader, member))) / team.Count();
             return double.IsNaN(strength)
                 ? 0d
